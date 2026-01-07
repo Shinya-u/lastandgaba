@@ -21,11 +21,10 @@
         color: var(--text);
         font-family: var(--font-sans);
         margin: 0;
-        padding-top: 80px; /* ヘッダーぶん下げる */
+        padding-top: 80px;
         overflow-x: hidden;
       }
 
-      /* --- 固定ヘッダー（左に3本線＋ロゴ） --- */
       header.top-bar {
         position: fixed;
         top: 0;
@@ -40,7 +39,7 @@
         box-sizing: border-box;
         z-index: 3000;
         border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        gap: 24px; /* 3本線とロゴの間 */
+        gap: 24px;
       }
 
       .menu-trigger {
@@ -69,8 +68,6 @@
         white-space: nowrap;
       }
 
-      /* --- 左から出るオーバーレイメニュー --- */
-
       .menu-overlay {
         position: fixed;
         inset: 0;
@@ -89,7 +86,7 @@
         position: absolute;
         top: 0;
         left: 0;
-        width: 320px; /* パネルの横幅（PCデフォルト） */
+        width: 320px;
         max-width: 80vw;
         height: 100%;
         background: #111;
@@ -158,7 +155,6 @@
         color: #fff;
       }
 
-      /* --- メインコンテンツ --- */
       main {
         padding: 40px 5vw;
         display: flex;
@@ -209,7 +205,7 @@
         text-align: justify;
       }
 
-      /* --- スマホ用調整（幅768px以下）--- */
+      /* === スマホ用・文字をかなり大きめに === */
       @media (max-width: 768px) {
         header.top-bar {
           padding: 0 20px;
@@ -221,27 +217,27 @@
         }
 
         .menu-panel {
-          width: 280px;          /* PCより少し細め or 好みで調整 */
+          width: 280px;
           padding: 24px 24px;
         }
 
         .menu-title {
-          font-size: 1.2rem;     /* タイトル少し大きく */
+          font-size: 1.3rem;     /* タイトルをしっかり大きく */
           letter-spacing: 0.35em;
           margin-bottom: 32px;
         }
 
         .menu-number {
-          font-size: 0.8rem;     /* 01/02 の数字を少し大きく */
+          font-size: 0.9rem;     /* 01/02 の数字もだいぶ大きく */
         }
 
         .menu-label {
-          font-size: 0.95rem;    /* メインラベルを一段階大きく */
+          font-size: 1.1rem;     /* ELEMENTS など、がっつり大きく */
           letter-spacing: 0.22em;
         }
 
         .brand-tree li {
-          font-size: 0.9rem;     /* ブランド名も大きめに */
+          font-size: 1.0rem;     /* ブランド名も1remまでアップ */
         }
 
         main {
@@ -251,7 +247,6 @@
     </style>
   </head>
   <body>
-    <!-- 左に 3本線 ＋ ロゴ -->
     <header class="top-bar">
       <div class="menu-trigger" id="menuBtn">
         <span></span><span></span><span></span>
@@ -259,7 +254,6 @@
       <div class="header-logo" id="logo">LAST &amp; GABA Ver2</div>
     </header>
 
-    <!-- 左から覆いかぶさるメニュー -->
     <div class="menu-overlay" id="menuOverlay">
       <div class="menu-panel">
         <div class="menu-close" id="menuClose">×</div>
