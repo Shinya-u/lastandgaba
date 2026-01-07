@@ -1,0 +1,183 @@
+---
+// Astroのフロントマター領域（将来的にデータを分ける時に使います）
+---
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAST & GABA</title>
+    <style>
+        :root {
+            --bg: #FAF9F6;
+            --text: #333333;
+            --accent: #999;
+            --font-serif: "YuMincho", "Yu Mincho", serif;
+            --font-sans: "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-sans);
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* ハンバーガーボタン */
+        .menu-trigger {
+            position: fixed;
+            top: 40px; left: 40px;
+            width: 30px; height: 18px;
+            cursor: pointer; z-index: 1000;
+            display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .menu-trigger span { display: block; width: 100%; height: 1px; background-color: var(--text); transition: 0.3s; }
+
+        /* ナビゲーション */
+        nav {
+            position: fixed;
+            top: 0; left: -300px;
+            width: 300px; height: 100%;
+            background-color: var(--bg);
+            padding: 100px 40px; box-sizing: border-box;
+            transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 999; border-right: 1px solid #eaeaea;
+            overflow-y: auto;
+        }
+        nav.is-open { left: 0; }
+
+        .logo { font-family: var(--font-serif); font-size: 1.1rem; letter-spacing: 0.4em; margin-bottom: 60px; cursor: pointer; }
+        .menu-item { margin-bottom: 30px; cursor: pointer; }
+        .menu-number { font-size: 0.7rem; color: var(--accent); display: block; margin-bottom: 5px; }
+        .menu-label { font-size: 0.9rem; letter-spacing: 0.2em; }
+
+        .brand-tree { display: none; list-style: none; padding: 15px 0 0 10px; margin: 0; }
+        .brand-tree li { font-size: 0.75rem; color: var(--accent); margin-bottom: 12px; letter-spacing: 0.1em; }
+        .brand-tree li:hover { color: var(--text); }
+
+        /* メインエリア */
+        main { padding: 120px 5vw; display: flex; flex-direction: column; align-items: center; }
+        
+        .hero-image {
+            width: 100%;
+            max-width: 900px;
+            aspect-ratio: 3 / 2;
+            background: #eee;
+            margin-bottom: 40px;
+            overflow: hidden;
+        }
+        .hero-image img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* 写真下のテキスト調整：左寄せ・2行制限 */
+        .description {
+            width: 100%;
+            max-width: 900px;
+            font-family: var(--font-serif);
+            line-height: 1.8;
+            font-size: 0.95rem;
+            color: #444;
+            text-align: left; /* 左寄せに変更 */
+            letter-spacing: 0.05em;
+            
+            /* 2行で制限するための設定 */
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* ブランド詳細用：詳細ページでは全文見せる */
+        .brand-content { text-align: left; }
+        .brand-content h2 { font-size: 1.4rem; font-weight: normal; letter-spacing: 0.4em; margin-bottom: 50px; text-align: center; color: #222; }
+        .brand-content h3 { font-size: 1rem; margin-top: 45px; margin-bottom: 15px; color: #222; border-left: 1px solid #333; padding-left: 15px; }
+        .brand-content p { margin-bottom: 25px; text-align: justify; line-height: 2; }
+
+        @media (max-width: 768px) {
+            .menu-trigger { top: 30px; left: 30px; }
+            main { padding: 100px 20px; }
+            .description { font-size: 0.9rem; line-height: 1.8; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="menu-trigger" id="menuBtn">
+        <span></span><span></span><span></span>
+    </div>
+
+    <nav id="navMenu">
+        <div class="logo" id="logoBtn">LAST & GABA</div>
+        <div class="menu-item"><span class="menu-number">01</span><span class="menu-label">CURATED</span></div>
+        <div class="menu-item"><span class="menu-number">02</span><span class="menu-label">PROGRESS</span></div>
+        <div class="menu-item"><span class="menu-number">03</span><span class="menu-label">ESSAY</span></div>
+        <div class="menu-item">
+            <div id="brandsToggle"><span class="menu-number">04</span><span class="menu-label">ARCHIVE</span></div>
+            <ul id="brandList" class="brand-tree">
+                <li data-brand="comoli">COMOLI</li>
+                <li data-brand="ssstein">SSSTEIN</li>
+                <li data-brand="forme">FORME</li>
+                <li data-brand="manifold">MANIFOLD</li>
+            </ul>
+        </div>
+    </nav>
+
+    <main id="mainContent">
+        <div class="hero-image">
+            <img id="mainImage" src="/hero.jpg" alt="">
+        </div>
+        <div class="description" id="textArea">
+            形。素材。時間。選別された、生活の構成要素。<br>
+            型の描く線と、生地が空気に馴染む様。日々の断片を、静かに記録する。
+        </div>
+    </main>
+
+    <script>
+        // ナビゲーション制御
+        const navMenu = document.getElementById('navMenu');
+        const brandList = document.getElementById('brandList');
+        const mainImage = document.getElementById('mainImage');
+        const textArea = document.getElementById('textArea');
+
+        document.getElementById('menuBtn').addEventListener('click', () => {
+            navMenu.classList.toggle('is-open');
+        });
+
+        document.getElementById('logoBtn').addEventListener('click', () => {
+            mainImage.src = '/hero.jpg';
+            textArea.classList.add('description'); // 2行制限を適用
+            textArea.innerHTML = `形。素材。時間。選別された、生活の構成要素。<br>型の描く線と、生地が空気に馴染む様。日々の断片を、静かに記録する。`;
+            navMenu.classList.remove('is-open');
+            window.scrollTo(0,0);
+        });
+
+        document.getElementById('brandsToggle').addEventListener('click', () => {
+            brandList.style.display = (brandList.style.display === 'block') ? 'none' : 'block';
+        });
+
+        // ブランドデータ
+        const data = {
+            'comoli': { img: '/comoli.jpg', title: 'COMOLI', text: '日本の気候と日本人の体型に、静かに寄り添う日常着。計算された「余白」こそが真髄。' },
+            'ssstein': { img: '/ssstein.jpg', title: 'SSSTEIN', text: '静寂としてのオーバーサイズ。計算された重なりが、日常の動きに独特の陰影を生む。' },
+            'forme': { img: '/forme.jpg', title: 'FORME', text: '日本人の足に馴染む、シャープで色気のある造形。熟練の職人技が光る「良い道具」。' },
+            'manifold': { img: '/manifold.jpg', title: 'MANIFOLD', text: '圧倒的な密度と信頼感。使い込むことで未完成の道具が、自分の身体の一部へと変わる。' }
+        };
+
+        // 各ブランドクリック時
+        document.querySelectorAll('#brandList li').forEach(li => {
+            li.addEventListener('click', () => {
+                const key = li.getAttribute('data-brand');
+                mainImage.src = data[key].img;
+                
+                // 詳細表示のときは2行制限を解除するか、そのままにするか
+                // 今回は「左寄せで2行くらい」という指示に基づき、そのまま適用します
+                textArea.innerHTML = `<strong>${data[key].title}</strong><br>${data[key].text}`;
+                
+                navMenu.classList.remove('is-open');
+                window.scrollTo(0,0);
+            });
+        });
+    </script>
+</body>
+</html>
