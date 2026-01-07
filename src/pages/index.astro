@@ -10,7 +10,7 @@
             --text: #333333;
             --accent: #999;
             --font-serif: "YuMincho", "Yu Mincho", serif;
-            --font-sans: "Helvetica Neue", Arial, sans-serif;
+            --font-sans: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
         }
 
         body {
@@ -21,28 +21,32 @@
             overflow-x: hidden;
         }
 
-        /* --- ハンバーガーボタン --- */
+        /* --- ハンバーガーメニューボタン：視認性強化版 --- */
         .menu-trigger {
             position: fixed;
             top: 40px;
             left: 40px;
             width: 30px;
-            height: 18px;
+            height: 20px;
             cursor: pointer;
-            z-index: 2000;
+            z-index: 3000; /* 全要素の最前面 */
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
+
         .menu-trigger span {
             display: block;
             width: 100%;
-            height: 1px;
+            height: 2px; /* 少し太くして存在感を出す */
             background-color: #333;
-            transition: 0.3s;
+            border-radius: 1px;
+            transition: all 0.3s;
+            /* 画像に重なっても見えるよう、ごく薄い白い縁取り（シャドウ）を付与 */
+            box-shadow: 0 0 2px rgba(255, 255, 255, 0.8);
         }
 
-        /* --- ナビゲーション（サイドメニュー） --- */
+        /* --- サイドナビゲーション --- */
         nav {
             position: fixed;
             top: 0;
@@ -52,65 +56,53 @@
             background-color: var(--bg);
             padding: 100px 40px;
             box-sizing: border-box;
-            transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            z-index: 1000;
-            border-right: 1px solid #eaeaea;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 2000;
+            border-right: 1px solid #eee;
             overflow-y: auto;
         }
+
         nav.is-open {
-            left: 0 !important;
+            transform: translateX(320px);
         }
 
-        .logo {
-            font-family: var(--font-serif);
-            font-size: 1.1rem;
-            letter-spacing: 0.4em;
-            margin-bottom: 60px;
-            cursor: pointer;
+        .logo { 
+            font-family: var(--font-serif); 
+            font-size: 1.1rem; 
+            letter-spacing: 0.4em; 
+            margin-bottom: 60px; 
+            cursor: pointer; 
             color: var(--text);
-            text-decoration: none;
             display: block;
         }
-        .menu-item {
-            margin-bottom: 30px;
-            cursor: pointer;
+
+        .menu-item { margin-bottom: 30px; cursor: pointer; }
+        .menu-number { font-size: 0.7rem; color: var(--accent); display: block; margin-bottom: 5px; }
+        .menu-label { font-size: 0.9rem; letter-spacing: 0.2em; }
+
+        .brand-tree { 
+            display: none; 
+            list-style: none; 
+            padding: 15px 0 0 10px; 
+            margin: 0; 
         }
-        .menu-number {
-            font-size: 0.7rem;
-            color: var(--accent);
-            display: block;
-            margin-bottom: 5px;
+        .brand-tree li { 
+            font-size: 0.8rem; 
+            color: var(--accent); 
+            margin-bottom: 12px; 
+            letter-spacing: 0.1em; 
+            cursor: pointer; 
         }
-        .menu-label {
-            font-size: 0.9rem;
-            letter-spacing: 0.2em;
+        .brand-tree li:hover { color: var(--text); }
+
+        /* --- メインコンテンツレイアウト --- */
+        main { 
+            padding: 120px 5vw; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
         }
 
-        .brand-tree {
-            display: none;
-            list-style: none;
-            padding: 15px 0 0 10px;
-            margin: 0;
-        }
-        .brand-tree li {
-            font-size: 0.8rem;
-            color: var(--accent);
-            margin-bottom: 12px;
-            letter-spacing: 0.1em;
-            cursor: pointer;
-        }
-        .brand-tree li:hover {
-            color: var(--text);
-        }
-
-        /* --- メインコンテンツ --- */
-        main {
-            padding: 120px 5vw;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: 0.4s;
-        }
         .hero-image {
             width: 100%;
             max-width: 900px;
@@ -119,12 +111,14 @@
             margin-bottom: 40px;
             overflow: hidden;
         }
-        .hero-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .hero-image img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            display: block;
         }
 
+        /* INDEX用の左寄せ2行テキスト */
         .description {
             width: 100%;
             max-width: 900px;
@@ -136,39 +130,35 @@
             letter-spacing: 0.05em;
         }
 
-        .brand-content h2 {
-            font-size: 1.4rem;
-            font-weight: normal;
-            letter-spacing: 0.4em;
-            margin-bottom: 50px;
-            text-align: center;
+        /* ブランドコンテンツ（長文）用の装飾 */
+        .brand-content h2 { 
+            font-size: 1.4rem; 
+            font-weight: normal; 
+            letter-spacing: 0.4em; 
+            margin-bottom: 50px; 
+            text-align: center; 
             color: #222;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
         }
-        .brand-content h3 {
-            font-size: 1rem;
-            margin-top: 45px;
-            margin-bottom: 15px;
-            color: #222;
-            border-left: 1px solid #333;
-            padding-left: 15px;
+        .brand-content h3 { 
+            font-size: 1rem; 
+            margin-top: 45px; 
+            margin-bottom: 15px; 
+            color: #222; 
+            border-left: 1px solid #333; 
+            padding-left: 15px; 
         }
-        .brand-content p {
-            margin-bottom: 25px;
-            text-align: justify;
+        .brand-content p { 
+            margin-bottom: 25px; 
+            text-align: justify; 
+            text-justify: inter-character;
         }
 
         @media (max-width: 768px) {
-            .menu-trigger {
-                top: 30px;
-                left: 30px;
-            }
-            main {
-                padding: 100px 20px;
-            }
-            .description {
-                font-size: 0.9rem;
-                line-height: 1.8;
-            }
+            .menu-trigger { top: 30px; left: 30px; }
+            main { padding: 80px 20px; }
+            .description { font-size: 0.9rem; line-height: 1.8; }
         }
     </style>
 </head>
@@ -180,23 +170,11 @@
 
     <nav id="navMenu">
         <div class="logo" onclick="showIndex()">LAST & GABA</div>
+        <div class="menu-item"><span class="menu-number">01</span><span class="menu-label">ELEMENTS</span></div>
+        <div class="menu-item"><span class="menu-number">02</span><span class="menu-label">PROGRESS</span></div>
+        <div class="menu-item"><span class="menu-number">03</span><span class="menu-label">ESSAY</span></div>
         <div class="menu-item">
-            <span class="menu-number">01</span>
-            <span class="menu-label">ELEMENTS</span>
-        </div>
-        <div class="menu-item">
-            <span class="menu-number">02</span>
-            <span class="menu-label">PROGRESS</span>
-        </div>
-        <div class="menu-item">
-            <span class="menu-number">03</span>
-            <span class="menu-label">ESSAY</span>
-        </div>
-        <div class="menu-item">
-            <div onclick="toggleBrands()">
-                <span class="menu-number">04</span>
-                <span class="menu-label">BRANDS</span>
-            </div>
+            <div onclick="toggleBrands()"><span class="menu-number">04</span><span class="menu-label">BRANDS</span></div>
             <ul id="brandList" class="brand-tree">
                 <li onclick="showContent('comoli')">COMOLI</li>
                 <li onclick="showContent('ssstein')">SSSTEIN</li>
@@ -208,7 +186,7 @@
 
     <main id="mainContent">
         <div class="hero-image">
-            <img id="mainImage" src="hero.jpg" alt="">
+            <img id="mainImage" src="hero.jpg" alt="hero image">
         </div>
         <div class="description" id="textArea">
             形。素材。時間。選別された、生活の構成要素。<br>
@@ -217,84 +195,92 @@
     </main>
 
     <script>
-        // メニューの開閉
+        // サイドメニュー開閉
         function toggleNav() {
             const nav = document.getElementById('navMenu');
             nav.classList.toggle('is-open');
         }
 
-        // ブランドツリーの開閉
+        // ブランドリスト開閉
         function toggleBrands() {
             const list = document.getElementById('brandList');
-            if (!list.style.display || list.style.display === 'none') {
-                list.style.display = 'block';
-            } else {
-                list.style.display = 'none';
-            }
+            list.style.display = (list.style.display === 'block') ? 'none' : 'block';
         }
 
+        // INDEXに戻るデータ
         const indexData = {
             img: 'hero.jpg',
             text: `形。素材。時間。選別された、生活の構成要素。<br>型の描く線と、生地が空気に馴染む様。日々の断片を、静かに記録する。`
         };
 
+        // ブランド別データ（キープ版長文）
         const data = {
             'comoli': {
                 img: 'comoli.jpg',
                 text: `<div class="brand-content"><h2>COMOLI</h2>
                 <h3>1. 思想の根幹（Philosophy）</h3>
-                <p>COMOLIの服を手に取るとき、最初に感じるのは「軽さ」と「違和感」かもしれません。デザイナーの小森啓二郎氏が目指しているのは、日本の気候と日本人の体型に、静かに寄り添う日常着なのだと感じます。そのために計算された「余白」こそが、このブランドの真髄であると   うのです。</p>
+                <p>COMOLIの服を手に取るとき、最初に感じるのは「軽さ」と「違和感」かもしれません。それは、私たちが普段、欧米の服飾文化に基づく「身体をきれいに造形する服」に慣れすぎているからではないでしょうか。デザイナーの小森啓二郎氏が目指しているのは、日本の気候と日本人の体型に、静かに寄り添う日常着なのだと感じます。服が主役として主張するのではなく、着る人の生活の背景として機能すること。そのために計算された「余白」こそが、このブランドの真髄であると思うのです。</p>
                 <h3>2. 素材と時間の関係（Material & Time）</h3>
-                <p>ブランドを象徴するコットンのギャバジン。手に入れた瞬間が完成ではありません。着込み、洗い、雨に打たれることで、少しずつその硬さが取れ、独特の膨らみとシワが刻まれていく過程にこそ魅力があります。そうして生まれる、使い込まれた美しさを肯定する姿勢が、このアーカイブの大きな柱になっています。</p>
-                <h3>3. デザイナーの立ち位置（Roots & Perspective）</h3>
-                <p>流行という短いスパンではなく、日々の暮らしという長い時間軸で服を捉える。だからこそ、数年前のモデルに今の気分で袖を通しても、そこに古さは微塵も感じられないのだと思います。作り手が提示する「設計」と受け取る側の「感覚」のギャップ。その余白があるからこそ、私たちは自分なりの価値を見出し、この服を長く愛でることができるのかもしれません。</p></div>`
+                <p>ブランドを象徴するコットンのギャバジン。手に入れた瞬間が完成ではありません。着込み、洗い、雨に打たれることで、少しずつその硬さが取れ、独特の膨らみとシワが刻まれていく過程にこそ魅力があります。シルクやカシミヤといった上質な素材を、あえて「日常の道具」としてラフに扱う。そうして生まれる、使い込まれた美しさを肯定する姿勢が、このアーカイブの大きな柱になっています。</p>
+                <h3>3. デザイナーの立ち位置（Perspective）</h3>
+                <p>流行という短いスパンではなく、日々の暮らしという長い時間軸で服を捉える。だからこそ、数年前のモデルに今の気分で袖を通しても、そこに古さは微塵も感じられないのだと思います。作り手が提示する「設計」と、それを受け取る私たちの「感覚」との間のギャップ。その余白があるからこそ、私たちはそこに自分なりの価値を見出し、この服を長く愛でることができるのかもしれません。</p></div>`
             },
             'ssstein': {
                 img: 'ssstein.jpg',
                 text: `<div class="brand-content"><h2>SSSTEIN</h2>
                 <h3>1. 最初の印象（Impression）</h3>
-                <p>SSSTEINの服を鏡の前で合わせたとき、まず思うのは「これは自分のための服なのか、それともこの服のための自分なのか」という戸惑いかもしれません。それくらい、シルエットが完成されている。普通ならオーバーサイズすぎると切り捨ててしまうようなボリュームが、着てみると不思議と「静寂」として成立してしまうのです。</p>
+                <p>SSSTEINの服を鏡の前で合わせたとき、まず思うのは「これは自分のための服なのか、それともこの服のための自分なのか」という、ちょっとした戸惑いかもしれません。それくらい、シルエットが完成されている。普通なら「オーバーサイズすぎる」と切り捨ててしまうようなボリュームが、着てみると不思議と「静寂」として成立してしまう。その絶妙なパワーバランスには、いつも驚かされます。</p>
                 <h3>2. 重なりが生む「空気」（Texture）</h3>
-                <p>デザイナーの浅川喜一朗氏が掲げる「stillness and motion（静と動）」。布が余っているのではなく、そこに「空気の層」を意図的に作り出している。その計算された重なりが、今の自分の動きを格好いいと思わせてくれる、そんな直感的な魅力があります。</p>
+                <p>デザイナーの浅川喜一朗氏が掲げる「stillness and motion（静と動）」。実際に着て動いてみると、布が余っているのではなく、そこに「空気の層」を意図的に作り出しているのがわかります。その計算された重なりを、私たちは「モード」と呼んだりしますが、実際にはもっと単純に「あ、今の自分の動き、なんか格好いいかも」と思わせてくれる、そんな直感的な魅力があるのだと思うのです。</p>
                 <h3>3. 設計と、都合のいい解釈（Architecture & Excuse）</h3>
-                <p>完璧な「設計」を、あえて着崩したり、日常の動作で汚していったりする。そこに生まれるギャップを、「自分だけの味」だと思い込む。それこそが、この少し高価な設計物を手に入れるための、最大の根拠であり、いつもの「言い訳」なのだと思います。</p></div>`
+                <p>完璧な「設計」を、あえて着崩したり、日常の動作で汚していったりする。そこに生まれるギャップを、「自分だけの味」だと思い込む。それこそが、この少し高価な設計物を手に入れるための、最大の根拠であり、いつもの「言い訳」なのだと思います。</div>`
             },
             'forme': {
                 img: 'forme.jpg',
                 text: `<div class="brand-content"><h2>FORME</h2>
-                <h3>1. 線の重なり（Form）</h3>
-                <p>デザイナーの小島明人氏が引く線は、日本人の足特有のボリュームを考慮しながらも、極めてシャープで色気がある。履かずにただ棚に置いて眺めているだけでも、「これは良い道具だ」という確信を持たせてくれる力があります。</p>
+                <h3>1. 線の重なり、面の構成（Form）</h3>
+                <p>デザイナーの小島明人氏が引く線は、単にクラシックな靴の模倣ではなく、日本人の足特有のボリュームを考慮しながらも、極めてシャープで色気がある。特に、土踏まずの絞りから踵へと続くライン。履かずにただ棚に置いて眺めているだけでも、「これは良い道具だ」という確信を持たせてくれる力があります。</p>
                 <h3>2. 足を包む「空間」の設計（Architecture）</h3>
                 <p>熟練の職人と共に何度も修正を重ねて作られる「木型（ラスト）」の完成度が高い。踵がしっかりとホールドされ、指先には適度な自由がある。自分の身体の一部を拡張してくれるような、そんな精密なフィッティングを感じさせてくれます。</p>
                 <h3>3. 素材の変容という「言い訳」（Material & Excuse）</h3>
-                <p>「この革がどう育つか見届けなければならない」というのは、靴好きにとっての免罪符のようなものです。この履き皺は自分だけのものだ、と言い聞かせながら、また新しい「一足」を並べてしまう。その言い訳さえも、この靴は優雅に受け止めてくれる気がしています。</p></div>`
+                <p>「この革がどう育つか見届けなければならない」というのは、靴好きにとっての免罪符のようなものです。この履き皺は自分だけのものだ、と言い聞かせながら、また新しい「一足」を玄関に並べてしまう。その言い訳さえも、この靴は優雅に受け止めてくれる気がしています。</div>`
             },
             'manifold': {
                 img: 'manifold.jpg',
                 text: `<div class="brand-content"><h2>MANIFOLD</h2>
                 <h3>1. 圧倒的な「強さ」への信頼（Structure）</h3>
-                <p>「構造と、その変化」を掲げるこのブランドが作るものは、軟弱な妥協を一切許さない、一種の重厚な装備品のようです。緻密に計算された設計、寸分違わぬステッチ、そして選び抜かれた革。触れるだけで、作り手の執念が伝わってきます。</p>
+                <p>「構造と、その変化」を掲げるこのブランドが作るものは、軟弱な妥協を一切許さない、一種の重厚な装備品のようです。緻密に計算された設計、寸分違わぬステッチ、そして選び抜かれた革。触れるだけで、作り手の執念にも似たこだわりが指先から伝わってきます。</p>
                 <h3>2. 設計が生む「必然の形」（Function）</h3>
-                <p>機能を突き詰めた結果としての形。カードの収まり、開閉のテンション、すべてに理由があり、「設計」の意思を感じます。使い始めのあの跳ね返すような革の硬さを、自分の手に馴染ませていく「調教」の時間は、このブランド特有の醍醐味です。</p>
+                <p>デザインのためのデザインではなく、機能を突き詰めた結果としての形。すべてのディテールに理由があり、そこに「設計」の意思を感じます。使い始めのあの跳ね返すような革の硬さを、自分の手に馴染ませていく「調教」の時間は、このブランド特有の醍醐味です。</p>
                 <h3>3. 未完成という「言い訳」（Process & Excuse）</h3>
-                <p>何年も使い込み、革が飴色に焼け、自分の手の脂でコーティングされて初めて、その人の道具として完成する。その時間の積み重ねを記録することこそが、このアーカイブの目的なのだと思うのです。</p></div>`
+                <p>何年も使い込み、革が飴色に焼け、角が丸くなり、自分の手の脂でコーティングされて初めて、その人の「道具」として完成する。その時間の積み重ねを記録することこそが、このアーカイブの目的なのだと思うのです。</div>`
             }
         };
 
-        // INDEXに戻る
+        // INDEX表示に戻す
         function showIndex() {
             document.getElementById('mainImage').src = indexData.img;
             document.getElementById('textArea').innerHTML = indexData.text;
             document.getElementById('navMenu').classList.remove('is-open');
-            window.scrollTo(0, 0);
+            window.scrollTo(0,0);
         }
 
-        // 各ブランド表示
+        // ブランドコンテンツを表示
         function showContent(key) {
-            document.getElementById('mainImage').src = data[key].img;
-            document.getElementById('textArea').innerHTML = data[key].text;
+            // イベントの伝播を止める
+            if (event) event.stopPropagation();
+            
+            const imgTag = document.getElementById('mainImage');
+            imgTag.src = data[key].img;
+            
+            const textArea = document.getElementById('textArea');
+            textArea.innerHTML = data[key].text;
+            
+            // メニューを閉じる
             document.getElementById('navMenu').classList.remove('is-open');
-            window.scrollTo(0, 0);
+            
+            // ページの一番上へ
+            window.scrollTo(0,0);
         }
     </script>
 </body>
