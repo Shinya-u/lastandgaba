@@ -1,4 +1,6 @@
 ---
+// 共通パーツを読み込む
+import Navigation from '../components/Navigation.astro';
 ---
 
 <!DOCTYPE html>
@@ -8,6 +10,7 @@
     <title>ESSAY | LAST &amp; GABA</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
+      /* ページ全体に関わる基本スタイルのみ残す */
       :root {
         --bg: #FAF9F6;
         --text: #333333;
@@ -22,149 +25,9 @@
         color: var(--text);
         font-family: var(--font-sans);
         margin: 0;
-        padding-top: 80px;
+        padding-top: 80px; /* ヘッダーの高さ分空ける */
         overflow-x: hidden;
         font-size: 16px;
-      }
-
-      header.top-bar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 80px;
-        background-color: var(--bg);
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        padding: 0 40px;
-        box-sizing: border-box;
-        z-index: 3000;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        gap: 24px;
-      }
-
-      .menu-trigger {
-        width: 28px;
-        height: 18px;
-        cursor: pointer;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-      }
-      .menu-trigger span {
-        display: block;
-        width: 100%;
-        height: 2px;
-        background-color: #333;
-        transition: 0.3s;
-      }
-
-      .header-logo {
-        font-family: var(--font-serif);
-        font-size: 1.1rem;
-        letter-spacing: 0.4em;
-        cursor: pointer;
-        color: var(--text);
-        text-decoration: none;
-        white-space: nowrap;
-      }
-
-      .menu-overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.35);
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.25s ease;
-        z-index: 3200;
-      }
-      .menu-overlay.is-open {
-        opacity: 1;
-        pointer-events: auto;
-      }
-
-      .menu-panel {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 320px;
-        max-width: 80vw;
-        height: 100%;
-        background: #111;
-        color: #f5f5f5;
-        box-sizing: border-box;
-        padding: 32px 40px;
-        transform: translateX(-100%);
-        transition: transform 0.3s ease;
-      }
-      .menu-overlay.is-open .menu-panel {
-        transform: translateX(0);
-      }
-
-      .menu-close {
-        font-size: 24px;
-        line-height: 1;
-        cursor: pointer;
-        margin-bottom: 40px;
-      }
-
-      .menu-title {
-        font-family: var(--font-serif);
-        font-size: 1.1rem;
-        letter-spacing: 0.4em;
-        margin-bottom: 40px;
-      }
-
-      .menu-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-      }
-
-      .menu-item {
-        margin-bottom: 16px;
-        cursor: pointer;
-      }
-
-      .menu-line {
-        display: inline-flex;
-        align-items: baseline;
-        gap: 0.6em;
-        text-decoration: none;
-        color: inherit;
-      }
-
-      .menu-number {
-        font-size: 0.7rem;
-        color: var(--accent);
-      }
-      .menu-label {
-        font-size: 0.9rem;
-        letter-spacing: 0.2em;
-      }
-
-      .brand-tree {
-        list-style: none;
-        padding: 6px 0 0 1.9em;
-        margin: 0;
-        display: none;
-      }
-      .brand-tree.is-open {
-        display: block;
-      }
-      .brand-tree li {
-        font-size: 0.85rem;
-        color: #ccc;
-        margin-bottom: 8px;
-        letter-spacing: 0.1em;
-      }
-      .brand-tree a {
-        color: inherit;
-        text-decoration: none;
-      }
-      .brand-tree a:hover {
-        color: #fff;
       }
 
       main {
@@ -185,39 +48,9 @@
       }
 
       @media (max-width: 768px) {
-        header.top-bar {
-          padding: 0 20px;
-          height: 60px;
-          gap: 16px;
-        }
         body {
           padding-top: 60px;
         }
-
-        .menu-panel {
-          width: 240px;
-          padding: 20px 16px;
-        }
-
-        .menu-title {
-          font-size: 1.1rem;
-          letter-spacing: 0.3em;
-          margin-bottom: 22px;
-        }
-
-        .menu-number {
-          font-size: 0.75rem;
-        }
-
-        .menu-label {
-          font-size: 1rem;
-          letter-spacing: 0.2em;
-        }
-
-        .brand-tree li {
-          font-size: 0.9rem;
-        }
-
         main {
           padding: 28px 16px;
         }
@@ -225,131 +58,58 @@
     </style>
   </head>
   <body>
-    <header class="top-bar">
-      <div class="menu-trigger" id="menuBtn">
-        <span></span><span></span><span></span>
-      </div>
-      <a href="/" class="header-logo">LAST &amp; GABA</a>
-    </header>
-
-    <div class="menu-overlay" id="menuOverlay">
-      <div class="menu-panel">
-        <div class="menu-close" id="menuClose">×</div>
-
-        <div class="menu-title">LAST &amp; GABA</div>
-
-        <ul class="menu-list">
-          <li class="menu-item">
-            <a class="menu-line" href="/elements">
-              <span class="menu-number">01</span>
-              <span class="menu-label">ELEMENTS</span>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a class="menu-line" href="/progress">
-              <span class="menu-number">02</span>
-              <span class="menu-label">PROGRESS</span>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a class="menu-line" href="/essay">
-              <span class="menu-number">03</span>
-              <span class="menu-label">ESSAY</span>
-            </a>
-          </li>
-          <li class="menu-item">
-            <span class="menu-line" id="brandsToggle">
-              <span class="menu-number">04</span>
-              <span class="menu-label">BRANDS</span>
-            </span>
-            <ul id="brandList" class="brand-tree">
-              <li><a href="/brands/comoli">COMOLI</a></li>
-              <li><a href="/brands/ssstein">SSSTEIN</a></li>
-              <li><a href="/brands/forme">FORME</a></li>
-              <li><a href="/brands/manifold">MANIFOLD</a></li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </div>
+    <Navigation />
 
     <main>
-      <!-- メイン画像 -->
-      <div
-        style="
-          width: 100%;
-          max-width: 900px;
-          margin: 0 auto 40px auto;
-          text-align: center;
-        "
-      >
-  <img
-    src="/essay/forest-0001.jpg"
-    alt="森の風景"
-    style="
-      width: 100%;        /* ここを 100% にして親要素いっぱいまで広げる */
-      max-width: 720px;   /* 画像自体の最大横幅。お好みで 640 / 720 / 800 など */
-      height: 460px;
-      object-fit: cover;
-      display: block;
-      margin: 0 auto;
-    "
-  />      </div>
+      <div style="width: 100%; max-width: 900px; margin: 0 auto 10px auto; text-align: center;">
+        <img
+          src="/essay/forest-0001.jpg"
+          alt="奥入瀬渓流"
+          style="width: 100%; max-width: 720px; height: auto; aspect-ratio: 16 / 9; object-fit: cover; display: block; margin: 0 auto;"
+        />
+      </div>
 
-      <!-- エッセイ本文 -->
+      <div style="width: 100%; max-width: 720px; margin: 0 auto 40px auto; text-align: left;">
+        <p style="font-family: var(--font-serif); font-size: 0.85rem; color: #666; line-height: 1.8; margin: 0;">
+          奥入瀬を歩いていると、圧倒的な緑に眩暈がしそうである。<br />
+          その感じをそのまま切り取るのもいいけれど、あえて色を捨てたモノクロームの世界に惹かれたということにしておく。
+        </p>
+      </div>
+
       <div class="description">
         <section>
           <h2 style="margin-bottom: 0.5em;">
-            <span style="font-size: 0.8rem; color: #999; margin-right: 0.75em;">
-              ESSAY 0001
-            </span>
-            <span style="font-size: 1.1rem; letter-spacing: 0.15em;">
-              森の写真について（仮タイトル）
-            </span>
+            <span style="font-size: 0.8rem; color: #999; margin-right: 0.75em;">ESSAY 0001</span>
+            <span style="font-size: 1.1rem; letter-spacing: 0.15em;">色のない森で、質感を探す</span>
           </h2>
 
           <p style="margin-bottom: 1.5em; font-size: 0.9rem; color: #777;">
-            2026 / LOCATION / NOTE
+            2026 / AOMORI / OIRASE
           </p>
 
           <p>
-            ここに日本語のテキストを書いてください。森の湿度、音の少なさ、
-            自分が着ていた服のこと、このあと何をしに行ったのか──自由に書いてOKです。
+            色という情報が消えると、それまで見えていなかったものが急に主張し始める。
+            注意深くなるのか、年齢のせいで目にやさしいのかわからないが。
+            シダの葉の一枚一枚が持つ複雑な幾何学模様。樹皮のゴツゴツとした手触り。
+            熊を思い出す。
           </p>
 
           <p>
-            満足いく1本が書けたら、この &lt;section&gt; 全体をコピーして、
-            ESSAY 0002 としてタイトルや本文だけ差し替えていけば、エッセイを増やしていけます。
+            そして、幾重にも重なる葉の隙間を縫って届く、柔らかな光のグラデーション。
+            普段、システムやコードといった整然としたストレスの世界に向き合っているからだろうか。
+            こうした自然が描く、不規則でいて完璧な造形美を眺めていると、理不尽なタスクを思い出す。
+          </p>
+
+          <p>
+            お洒落な観光スポットを急いで巡るよりも、ただこうして余暇を楽しみ、森の音に耳を澄ませる。
+            そんな、目的のない贅沢な時間が、一番の贅沢だった。
+          </p>
+          
+          <p>
+            でも、熊が怖い。多いからね。。。
           </p>
         </section>
       </div>
     </main>
-
-    <script is:raw>
-      document.addEventListener('DOMContentLoaded', () => {
-        const menuBtn = document.getElementById('menuBtn');
-        const menuOverlay = document.getElementById('menuOverlay');
-        const menuClose = document.getElementById('menuClose');
-        const brandsToggle = document.getElementById('brandsToggle');
-        const brandList = document.getElementById('brandList');
-
-        const openMenu = () => {
-          menuOverlay.classList.add('is-open');
-        };
-        const closeMenu = () => {
-          menuOverlay.classList.remove('is-open');
-        };
-
-        menuBtn?.addEventListener('click', openMenu);
-        menuClose?.addEventListener('click', closeMenu);
-        menuOverlay?.addEventListener('click', (e) => {
-          if (e.target === menuOverlay) closeMenu();
-        });
-
-        brandsToggle?.addEventListener('click', () => {
-          brandList?.classList.toggle('is-open');
-        });
-      });
-    </script>
   </body>
 </html>

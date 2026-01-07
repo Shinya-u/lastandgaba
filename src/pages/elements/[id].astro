@@ -1,0 +1,61 @@
+---
+import Navigation from '../../components/Navigation.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('elements');
+  return entries.map((entry) => ({
+    params: { id: entry.data.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+
+// Markdown本文をHTMLとしてレンダリングするためのコンポーネント
+const { Content } = await entry.render();
+---
+
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{entry.data.title} | ELEMENTS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      :root { --bg: #FAF9F6; --text: #333; --font-serif: "YuMincho", "Yu Mincho", serif; }
+      body { background-color: var(--bg); color: var(--text); margin: 0; padding-top: 80px; font-family: sans-serif; }
+      main { padding: 40px 5vw; max-width: 800px; margin: 0 auto; }
+      .brand { font-size: 0.9rem; letter-spacing: 0.2em; color: #999; }
+      .title { font-family: var(--font-serif); font-size: 2rem; margin: 10px 0 32px; }
+
+      .images { display: grid; gap: 20px; margin: 0 0 32px; }
+      .image-wrap { width: 100%; aspect-ratio: 3 / 4; background: #eee; overflow: hidden; }
+      .image-wrap img { width: 100%; height: 100%; object-fit: cover; }
+
+      .body { font-family: var(--font-serif); line-height: 2; font-size: 0.95rem; color: #444; }
+      .body p { margin: 0 0 1.2em; }
+      .body a { color: inherit; text-decoration: underline; }
+      .body h2, .body h3 { font-family: var(--font-serif); margin: 2em 0 0.8em; }
+    </style>
+  </head>
+  <body>
+    <Navigation />
+    <main>
+      <div class="brand">{entry.data.brand}</div>
+      <h1 class="title">{entry.data.title}</h1>
+
+      <div class="images">
+        {entry.data.images.map((src, i) => (
+          <div class="image-wrap">
+            <img src={src} alt={`${entry.data.title} ${i + 1}`} loading="lazy" />
+          </div>
+        ))}
+      </div>
+
+      <div class="body">
+        <Content />
+      </div>
+    </main>
+  </body>
+</html>

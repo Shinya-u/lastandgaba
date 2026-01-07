@@ -1,0 +1,112 @@
+---
+// 共通パーツを読み込む
+import Navigation from '../../components/Navigation.astro';
+---
+
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>MANIFOLD | LAST &amp; GABA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      :root {
+        --bg: #FAF9F6;
+        --text: #333333;
+        --accent: #999;
+        --font-serif: "YuMincho", "Yu Mincho", serif;
+        --font-sans: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
+      }
+      body {
+        background-color: var(--bg);
+        color: var(--text);
+        font-family: var(--font-sans);
+        margin: 0;
+        padding-top: 80px;
+        overflow-x: hidden;
+      }
+      main {
+        padding: 40px 5vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .brand-content {
+        width: 100%;
+        max-width: 900px;
+        text-align: left;
+      }
+      .brand-title {
+        font-family: var(--font-serif);
+        font-size: 1.5rem;
+        letter-spacing: 0.3em;
+        margin-bottom: 40px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        padding-bottom: 10px;
+      }
+      .brand-description {
+        font-family: var(--font-serif);
+        line-height: 2.2;
+        font-size: 0.95rem;
+        color: #444;
+        margin-bottom: 60px;
+      }
+      .main-image-container {
+        width: 100%;
+        margin-bottom: 60px;
+        text-align: center;
+      }
+      .main-image-container img {
+        width: 100%;
+        max-width: 800px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+        /* 必要に応じて微調整してください */
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+      }
+
+      @media (max-width: 768px) {
+        body { padding-top: 60px; }
+        .brand-title { font-size: 1.2rem; }
+        main { padding: 28px 16px; }
+      }
+    </style>
+  </head>
+  <body>
+    <Navigation />
+
+    <main>
+      <div class="brand-content">
+        <h1 class="brand-title">MANIFOLD</h1>
+        
+        <div class="main-image-container">
+          <img src="/brands/manifold.jpg" alt="MANIFOLD ホースハイドバッグ" />
+        </div>
+
+        <div class="brand-description">
+<div class="brand-description">
+  <p>
+    私の偏見かもしれないが、比較的アメカジ好みのブランドかと思う。<br />
+    素材への拘り、技術、プロダクトの完成度は間違いなくトップレベルだ。
+  </p>
+
+  <p>
+    正直、好き嫌いの分かれるデザインもあると認識している。<br />
+    だが、アメカジでなくても刺さる人には、深く刺さる。
+  </p>
+
+  <p>
+    代表的なプロダクトはラウンドジップウォレットだと思っているのだが、<br />
+    この「ミニブリーフ」に関しては、唯一無二の傑作だ。
+  </p>
+
+  <p>
+    その理由は、いずれ「ELEMENTS」で紹介していこうと思う。<br />
+    間違いなくこの分野のトップレベルに君臨する、稀有なブランドである。
+  </p>
+</div>        </div>
+      </div>
+    </main>
+  </body>
+</html>

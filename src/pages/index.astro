@@ -1,6 +1,7 @@
 ---
+// 共通パーツを読み込む
+import Navigation from '../components/Navigation.astro';
 ---
-
 <!DOCTYPE html>
 <html lang="ja">
   <head>
@@ -136,7 +137,20 @@
         display: inline-flex;
         align-items: baseline;
         gap: 0.6em;
+        color: inherit;
+        text-decoration: none;
       }
+
+  /*これを追加：visited等でも青/紫にさせない */
+  .menu-panel a.menu-line,
+  .menu-panel a.menu-line:link,
+  .menu-panel a.menu-line:visited,
+  .menu-panel a.menu-line:hover,
+  .menu-panel a.menu-line:active {
+    color: inherit;
+    text-decoration: none;
+  }
+
 
       .menu-number {
         font-size: 0.7rem;
@@ -274,24 +288,29 @@
         <div class="menu-title">LAST &amp; GABA</div>
 
         <ul class="menu-list">
+          <!-- ✅ ELEMENTS: リンク化 -->
           <li class="menu-item">
-            <span class="menu-line">
+            <a class="menu-line" href="/elements">
               <span class="menu-number">01</span>
               <span class="menu-label">ELEMENTS</span>
-            </span>
+            </a>
           </li>
+
           <li class="menu-item">
             <span class="menu-line">
               <span class="menu-number">02</span>
               <span class="menu-label">PROGRESS</span>
             </span>
           </li>
-<li class="menu-item">
-  <a class="menu-line" href="/essay">
-    <span class="menu-number">03</span>
-    <span class="menu-label">ESSAY</span>
-  </a>
-</li>          <li class="menu-item">
+
+          <li class="menu-item">
+            <a class="menu-line" href="/essay">
+              <span class="menu-number">03</span>
+              <span class="menu-label">ESSAY</span>
+            </a>
+          </li>
+
+          <li class="menu-item">
             <span class="menu-line" id="brandsToggle">
               <span class="menu-number">04</span>
               <span class="menu-label">BRANDS</span>
@@ -396,6 +415,11 @@
             showContent(key);
             closeMenu();
           });
+        });
+
+        // ✅ 任意：メニュー内リンクを押したらメニューを閉じる（体感改善）
+        document.querySelectorAll('.menu-panel a[href]').forEach((a) => {
+          a.addEventListener('click', () => closeMenu());
         });
       });
     </script>
