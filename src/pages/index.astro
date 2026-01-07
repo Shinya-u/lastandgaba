@@ -89,7 +89,7 @@
         position: absolute;
         top: 0;
         left: 0;
-        width: 320px; /* パネルの横幅 */
+        width: 320px; /* パネルの横幅（PCデフォルト） */
         max-width: 80vw;
         height: 100%;
         background: #111;
@@ -209,6 +209,7 @@
         text-align: justify;
       }
 
+      /* --- スマホ用調整（幅768px以下）--- */
       @media (max-width: 768px) {
         header.top-bar {
           padding: 0 20px;
@@ -218,10 +219,31 @@
         body {
           padding-top: 60px;
         }
+
         .menu-panel {
-          width: 260px;
+          width: 280px;          /* PCより少し細め or 好みで調整 */
           padding: 24px 24px;
         }
+
+        .menu-title {
+          font-size: 1.2rem;     /* タイトル少し大きく */
+          letter-spacing: 0.35em;
+          margin-bottom: 32px;
+        }
+
+        .menu-number {
+          font-size: 0.8rem;     /* 01/02 の数字を少し大きく */
+        }
+
+        .menu-label {
+          font-size: 0.95rem;    /* メインラベルを一段階大きく */
+          letter-spacing: 0.22em;
+        }
+
+        .brand-tree li {
+          font-size: 0.9rem;     /* ブランド名も大きめに */
+        }
+
         main {
           padding: 32px 20px;
         }
@@ -304,7 +326,7 @@
         forme: {
           img: '/forme.jpg',
           text:
-            '<div class="brand-content"><h2>FORME</h2><h3>歩行を設計する</h3><p>日本人の足特有のボリュームを考慮しながらも、極めてシャープで色気があるライン。木型の完成度が   く、自分の身体の一部を拡張してくれるような、精密なフィッティングを感じさせてくれます。</p></div>'
+            '<div class="brand-content"><h2>FORME</h2><h3>歩行を設計する</h3><p>日本人の足特有のボリュームを考慮しながらも、極めてシャープで色気があるライン。木型の完成度が高く、自分の身体の一部を拡張してくれるような、精密なフィッティングを感じさせてくれます。</p></div>'
         },
         manifold: {
           img: '/manifold.jpg',
