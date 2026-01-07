@@ -1,7 +1,3 @@
----
-// Astroのフロントマター領域（将来的にデータを分ける時に使います）
----
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -27,8 +23,7 @@
 
         /* ハンバーガーボタン */
         .menu-trigger {
-            position: fixed;
-            top: 40px; left: 40px;
+            position: fixed; top: 40px; left: 40px;
             width: 30px; height: 18px;
             cursor: pointer; z-index: 1000;
             display: flex; flex-direction: column; justify-content: space-between;
@@ -37,8 +32,7 @@
 
         /* ナビゲーション */
         nav {
-            position: fixed;
-            top: 0; left: -300px;
+            position: fixed; top: 0; left: -300px;
             width: 300px; height: 100%;
             background-color: var(--bg);
             padding: 100px 40px; box-sizing: border-box;
@@ -57,42 +51,29 @@
         .brand-tree li { font-size: 0.75rem; color: var(--accent); margin-bottom: 12px; letter-spacing: 0.1em; }
         .brand-tree li:hover { color: var(--text); }
 
-        /* メインエリア */
+        /* メイン */
         main { padding: 120px 5vw; display: flex; flex-direction: column; align-items: center; }
-        
         .hero-image {
-            width: 100%;
-            max-width: 900px;
-            aspect-ratio: 3 / 2;
-            background: #eee;
-            margin-bottom: 40px;
-            overflow: hidden;
+            width: 100%; max-width: 900px; aspect-ratio: 3 / 2;
+            background: #eee; margin-bottom: 40px; overflow: hidden;
         }
         .hero-image img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* 写真下のテキスト調整：左寄せ・2行制限 */
+        /* テキストエリアの基本（INDEX用：左寄せ） */
         .description {
-            width: 100%;
-            max-width: 900px;
+            width: 100%; max-width: 900px;
             font-family: var(--font-serif);
-            line-height: 1.8;
+            line-height: 2.2;
             font-size: 0.95rem;
             color: #444;
-            text-align: left; /* 左寄せに変更 */
+            text-align: left;
             letter-spacing: 0.05em;
-            
-            /* 2行で制限するための設定 */
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
         }
 
-        /* ブランド詳細用：詳細ページでは全文見せる */
-        .brand-content { text-align: left; }
+        /* ブランド詳細用の装飾 */
         .brand-content h2 { font-size: 1.4rem; font-weight: normal; letter-spacing: 0.4em; margin-bottom: 50px; text-align: center; color: #222; }
         .brand-content h3 { font-size: 1rem; margin-top: 45px; margin-bottom: 15px; color: #222; border-left: 1px solid #333; padding-left: 15px; }
-        .brand-content p { margin-bottom: 25px; text-align: justify; line-height: 2; }
+        .brand-content p { margin-bottom: 25px; text-align: justify; }
 
         @media (max-width: 768px) {
             .menu-trigger { top: 30px; left: 30px; }
@@ -103,81 +84,111 @@
 </head>
 <body>
 
-    <div class="menu-trigger" id="menuBtn">
+    <div class="menu-trigger" onclick="toggleNav()">
         <span></span><span></span><span></span>
     </div>
 
     <nav id="navMenu">
-        <div class="logo" id="logoBtn">LAST & GABA</div>
-        <div class="menu-item"><span class="menu-number">01</span><span class="menu-label">CURATED</span></div>
+        <div class="logo" onclick="showIndex()">LAST & GABA</div>
+        <div class="menu-item"><span class="menu-number">01</span><span class="menu-label">ELEMENTS</span></div>
         <div class="menu-item"><span class="menu-number">02</span><span class="menu-label">PROGRESS</span></div>
         <div class="menu-item"><span class="menu-number">03</span><span class="menu-label">ESSAY</span></div>
         <div class="menu-item">
-            <div id="brandsToggle"><span class="menu-number">04</span><span class="menu-label">ARCHIVE</span></div>
+            <div onclick="toggleBrands()"><span class="menu-number">04</span><span class="menu-label">BRANDS</span></div>
             <ul id="brandList" class="brand-tree">
-                <li data-brand="comoli">COMOLI</li>
-                <li data-brand="ssstein">SSSTEIN</li>
-                <li data-brand="forme">FORME</li>
-                <li data-brand="manifold">MANIFOLD</li>
+                <li onclick="showContent('comoli')">COMOLI</li>
+                <li onclick="showContent('ssstein')">SSSTEIN</li>
+                <li onclick="showContent('forme')">FORME</li>
+                <li onclick="showContent('manifold')">MANIFOLD</li>
             </ul>
         </div>
     </nav>
 
     <main id="mainContent">
         <div class="hero-image">
-            <img id="mainImage" src="/hero.jpg" alt="">
+            <img id="mainImage" src="hero.jpg" alt="">
         </div>
         <div class="description" id="textArea">
             形。素材。時間。選別された、生活の構成要素。<br>
-            型の描く線と、生地が空気に馴染む様。日々の断片を、静かに朽ちながら記録する。
+            型の描く線と、生地が空気に馴染む様。日々の断片を、静かに記録する。
         </div>
     </main>
 
     <script>
-        // ナビゲーション制御
-        const navMenu = document.getElementById('navMenu');
-        const brandList = document.getElementById('brandList');
-        const mainImage = document.getElementById('mainImage');
-        const textArea = document.getElementById('textArea');
+        function toggleNav() { document.getElementById('navMenu').classList.toggle('is-open'); }
+        function toggleBrands() {
+            const list = document.getElementById('brandList');
+            list.style.display = (list.style.display === 'block') ? 'none' : 'block';
+        }
 
-        document.getElementById('menuBtn').addEventListener('click', () => {
-            navMenu.classList.toggle('is-open');
-        });
-
-        document.getElementById('logoBtn').addEventListener('click', () => {
-            mainImage.src = '/hero.jpg';
-            textArea.classList.add('description'); // 2行制限を適用
-            textArea.innerHTML = `形。素材。時間。選別された、生活の構成要素。<br>型の描く線と、生地が空気に馴染む様。日々の断片を、静かに朽ちながら記録する。`;
-            navMenu.classList.remove('is-open');
-            window.scrollTo(0,0);
-        });
-
-        document.getElementById('brandsToggle').addEventListener('click', () => {
-            brandList.style.display = (brandList.style.display === 'block') ? 'none' : 'block';
-        });
-
-        // ブランドデータ
-        const data = {
-            'comoli': { img: '/comoli.jpg', title: 'COMOLI', text: '日本の気候と日本人の体型に、静かに寄り添う日常着。計算された「余白」こそが真髄。' },
-            'ssstein': { img: '/ssstein.jpg', title: 'SSSTEIN', text: '静寂としてのオーバーサイズ。計算された重なりが、日常の動きに独特の陰影を生む。' },
-            'forme': { img: '/forme.jpg', title: 'FORME', text: '日本人の足に馴染む、シャープで色気のある造形。熟練の職人技が光る「良い道具」。' },
-            'manifold': { img: '/manifold.jpg', title: 'MANIFOLD', text: '圧倒的な密度と信頼感。使い込むことで未完成の道具が、自分の身体の一部へと変わる。' }
+        const indexData = {
+            img: 'hero.jpg',
+            text: `形。素材。時間。選別された、生活の構成要素。<br>型の描く線と、生地が空気に馴染む様。日々の断片を、静かに記録する。`
         };
 
-        // 各ブランドクリック時
-        document.querySelectorAll('#brandList li').forEach(li => {
-            li.addEventListener('click', () => {
-                const key = li.getAttribute('data-brand');
-                mainImage.src = data[key].img;
-                
-                // 詳細表示のときは2行制限を解除するか、そのままにするか
-                // 今回は「左寄せで2行くらい」という指示に基づき、そのまま適用します
-                textArea.innerHTML = `<strong>${data[key].title}</strong><br>${data[key].text}`;
-                
-                navMenu.classList.remove('is-open');
-                window.scrollTo(0,0);
-            });
-        });
+        const data = {
+            'comoli': {
+                img: 'comoli.jpg',
+                text: `<div class="brand-content"><h2>COMOLI</h2>
+                <h3>1. 思想の根幹（Philosophy）</h3>
+                <p>COMOLIの服を手に取るとき、最初に感じるのは「軽さ」と「違和感」かもしれません。それは、私たちが普段、欧米の服飾文化に基づく「身体をきれいに造形する服」に慣れすぎているからではないでしょうか。デザイナーの小森啓二郎氏が目指しているのは、日本の気候と日本人の体型に、静かに寄り添う日常着なのだと感じます。湿度の高い夏には風を通し、冬には暖かい空気を溜め込む。服が主役として主張するのではなく、着る人の生活の背景として機能すること。そのために計算された「余白」こそが、このブランドの真髄であると思うのです。</p>
+                <h3>2. 素材と時間の関係（Material & Time）</h3>
+                <p>特筆すべきは、生地選びに対する極めて冷静な視点です。例えば、ブランドを象徴するコットンのギャバジン。高密度に織り上げられたその生地は、手に入れた瞬間が完成ではありません。着込み、洗い、雨に打たれることで、少しずつその硬さが取れ、独特の膨らみとシワが刻まれていく過程にこそ魅力があります。シルクやカシミヤといった上質な素材を、あえて「日常の道具」としてラフに扱う。そうして生まれる、使い込まれた美しさを肯定する姿勢が、このアーカイブの大きな柱になっています。</p>
+                <h3>3. デザイナーの立ち位置と、その解釈（Roots & Perspective）</h3>
+                <p>小森氏は、ファッションの最前線に立ちながら、常にそこから一歩引いた場所でモノを見ているように思えます。自身のブランドを過度に誇示することなく、ただ「今、自分たちが着たいものは何か」を問い続ける。2011年の始動以来、そのスタンスは一貫しているように見えます。流行という短いスパンではなく、日々の暮らしという長い時間軸で服を捉える。だからこそ、数年前のモデルに今の気分で袖を通しても、そこに古さは微塵も感じられないのだと思います。</p>
+                <p>作り手が提示する「設計（Architecture）」と、それを受け取る私たちの「感覚」との間には、必ずギャップが存在するものです。しかし、その正解の分からない余白があるからこそ、私たちはそこに自分なりの価値を見出し、この服を長く愛でることができるのかもしれません。それこそが、買う側の根拠、あるいは単なる「言い訳」なのかもしれない。そう思いながら、また袖を通しています。</p>
+                <h3>4. 個人的な観察（Personal View）</h3>
+                <p>クローゼットにCOMOLIが並ぶと、不思議と他の服も落ち着きを取り戻すような気がします。それは、このブランドが持つ「匿名性」が、周囲の個性をうまく引き立ててくれるからかもしれません。型の描く線はあくまで自然で、生地は空気と馴染み、着る人の動きに合わせて表情を変えていく。派手な仕掛けはありません。しかし、一度その心地よさを知ってしまうと、他へ戻るのが難しくなる。それは、服を着ているという感覚さえも忘れてしまうような、静かな自由を享受できるからではないでしょうか。</p></div>`
+            },
+            'ssstein': {
+                img: 'ssstein.jpg',
+                text: `<div class="brand-content"><h2>SSSTEIN</h2>
+                <h3>1. 最初の印象（Impression）</h3>
+                <p>SSSTEINの服を鏡の前で合わせたとき、まず思うのは「これは自分のための服なのか、それともこの服のための自分なのか」という、ちょっとした戸惑いかもしれません。それくらい、シルエットが完成されている。特にあの、たっぷりとした袖の溜まりや、地面に吸い付くようなパンツの落ち感。普通なら「オーバーサイズすぎる」と切り捨ててしまうようなボリュームが、着てみると不思議と「静寂」として成立してしまう。その絶妙なパワーバランスには、いつも驚かされます。</p>
+                <h3>2. 重なりが生む「空気」（Texture）</h3>
+                <p>デザイナーの浅川喜一朗氏が掲げる「stillness and motion（静と動）」というコンセプト。実際に着て動いてみると、生地が重なり合う部分に独特の陰影ができるのがわかります。ただ大きいだけじゃない。布が余っているのではなく、そこに「空気の層」を意図的に作り出している。その計算された重なりを、私たちは「モード」と呼んだりしますが、実際にはもっと単純に「あ、今の自分の動き、なんか格好いいかも」と思わせてくれる、そんな直感的な魅力があるのだと思うのです。</p>
+                <h3>3. 設計と、都合のいい解釈（Architecture & Excuse）</h3>
+                <p>このブランドの服は、まるで近代建築のようです。直線と曲線の構成がミリ単位で決まっていて、そこに妥協がない。でも、だからといって私たちが背筋を伸ばして、建築物のようにカチコチに固まる必要はないはずです。作り手が用意した完璧な「設計（Architecture）」を、あえて着崩したり、日常のずぼらな動作で汚していったりする。そこに生まれるギャップを、「自分だけの味」だと思い込む。それこそが、この少し高価な「設計物」を手に入れるための、最大の根拠であり、いつもの「言い訳」なのだと思います。</p>
+                <h3>4. 結局、なぜ選ぶのか（Conclusion）</h3>
+                <p>派手なロゴがあるわけでもなく、一見するとシンプル。なのに、一歩街に出れば明らかに「違う」空気を纏っている。結局のところ、SSSTEINを選ぶ理由なんて「この袖のクッションがたまらない」とか「この生地の揺れ方が好きだ」とか、そんな断片的な感覚で十分なのかもしれません。理屈をこねてアーカイブ化しようとしているけれど、結局は「ただ、この服を着ている自分が好きだ」という、一番シンプルな結論にたどり着くための言い訳を、日々探しているだけのような気がしています。</div>`
+            },
+            'forme': {
+                img: 'forme.jpg',
+                text: `<div class="brand-content"><h2>FORME</h2>
+                <h3>1. 線の重なり、面の構成（Form）</h3>
+                <p>FORMEの靴を箱から取り出したとき、まず見惚れてしまうのは、その「線」の美しさかもしれません。デザイナーの小島明人氏が引く線は、単にクラシックな靴の模倣ではなく、日本人の足特有のボリュームを考慮しながらも、極めてシャープで色気がある。特に、土踏まずの絞りから踵へと続くライン。履かずにただ棚に置いて眺めているだけでも、「これは良い道具だ」という確信を持たせてくれる力があります。</p>
+                <h3>2. 足を包む「空間」の設計（Architecture）</h3>
+                <p>実際に足を入れると、見た目のシャープさからは想像できないほどの安心感に包まれます。それは、熟練の職人と共に何度も修正を重ねて作られる「木型（ラスト）」の完成度が高いからなのだと思うのです。踵がしっかりとホールドされ、指先には適度な自由がある。「良い靴は歩行を助ける」と言いますが、FORMEの場合はもっと密接に、自分の身体の一部を拡張してくれるような、そんな精密なフィッティングを感じさせてくれます。</p>
+                <h3>3. 素材の変容という「言い訳」（Material & Excuse）</h3>
+                <p>そして、私たちがこの靴をアーカイブに加える最大の理由は、やはり「革」にあります。例えば、キメの細かいカーフや、無骨ながらも品のあるホースバット。履き込むことで刻まれるシワや、体温と摩擦で増していく艶。「この革がどう育つか見届けなければならない」というのは、靴好きにとっての免罪符のようなものです。この履き皺は自分だけのものだ、と言い聞かせながら、また新しい「一足」を玄関に並べてしまう。その言い訳さえも、この靴は優雅に受け止めてくれる気がしています。</div>`
+            },
+            'manifold': {
+                img: 'manifold.jpg',
+                text: `<div class="brand-content"><h2>MANIFOLD</h2>
+                <h3>1. 圧倒的な「強さ」への信頼（Structure）</h3>
+                <p>MANIFOLDのプロダクトを手に取ると、まずその「密度」に圧倒されます。「構造と、その変化」を掲げるこのブランドが作るものは、軟弱な妥協を一切許さない、一種の重厚な装備品のようです。緻密に計算された設計、寸分違わぬステッチ、そして選び抜かれた革。触れるだけで、作り手の執念にも似たこだわりが指先から伝わってきます。それは、単に「丈夫」という言葉では片付けられない、圧倒的な信頼感です。</p>
+                <h3>2. 設計が生む「必然の形」（Function）</h3>
+                <p>デザインのためのデザインではなく、機能を突き詰めた結果としての形。カードの収まり、開閉のテンション、ポケットに入れた時の収まり具合。すべてのディテールに理由があり、そこに「設計（Architecture）」の意思を感じます。使い始めの、あの跳ね返すような革の硬さ。それを自分の手の動きや、ポケットの形に合わせてじっくりと「調教」していく過程は、他のブランドでは味わえない、このブランド特有の醍醐味かもしれません。</p>
+                <h3>3. 未完成という「言い訳」（Process & Excuse）</h3>
+                <p>MANIFOLDの製品は、買った瞬間が一番「未完成」なのかもしれません。何年も使い込み、革が飴色に焼け、角が丸くなり、自分の手の脂でコーティングされて初めて、その人の「道具」として完成する。「これは一生モノだから」「育てる楽しみがあるから」という言葉は、私たちの物欲を正当化する最強の言い訳です。しかし、実際に数年経ったその姿を見たとき、その言い訳は嘘ではなかったと確信できる。その時間の積み重ねを記録することこそが、このアーカイブの目的なのだと思うのです。</div>`
+            }
+        };
+
+        function showIndex() {
+            document.getElementById('mainImage').src = indexData.img;
+            document.getElementById('textArea').innerHTML = indexData.text;
+            const nav = document.getElementById('navMenu');
+            if(nav.classList.contains('is-open')) toggleNav();
+            window.scrollTo(0,0);
+        }
+
+        function showContent(key) {
+            event.stopPropagation();
+            document.getElementById('mainImage').src = data[key].img;
+            document.getElementById('textArea').innerHTML = data[key].text;
+            toggleNav();
+            window.scrollTo(0,0);
+        }
     </script>
 </body>
 </html>
