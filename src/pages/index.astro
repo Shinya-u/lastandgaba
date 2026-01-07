@@ -198,10 +198,10 @@
                 <span class="menu-label">BRANDS</span>
             </div>
             <ul id="brandList" class="brand-tree">
-                <li onclick="showContent(event, 'comoli')">COMOLI</li>
-                <li onclick="showContent(event, 'ssstein')">SSSTEIN</li>
-                <li onclick="showContent(event, 'forme')">FORME</li>
-                <li onclick="showContent(event, 'manifold')">MANIFOLD</li>
+                <li onclick="showContent('comoli')">COMOLI</li>
+                <li onclick="showContent('ssstein')">SSSTEIN</li>
+                <li onclick="showContent('forme')">FORME</li>
+                <li onclick="showContent('manifold')">MANIFOLD</li>
             </ul>
         </div>
     </nav>
@@ -226,7 +226,11 @@
         // ブランドツリーの開閉
         function toggleBrands() {
             const list = document.getElementById('brandList');
-            list.style.display = (list.style.display === 'block') ? 'none' : 'block';
+            if (!list.style.display || list.style.display === 'none') {
+                list.style.display = 'block';
+            } else {
+                list.style.display = 'none';
+            }
         }
 
         const indexData = {
@@ -239,7 +243,7 @@
                 img: 'comoli.jpg',
                 text: `<div class="brand-content"><h2>COMOLI</h2>
                 <h3>1. 思想の根幹（Philosophy）</h3>
-                <p>COMOLIの服を手に取るとき、最初に感じるのは「軽さ」と「違和感」かもしれません。デザイナーの小森啓二郎氏が目指しているのは、日本の気候と日本人の体型に、静かに寄り添う日常着なのだと感じます。そのために計算された「余白」こそが、このブランドの真髄であると思うのです。</p>
+                <p>COMOLIの服を手に取るとき、最初に感じるのは「軽さ」と「違和感」かもしれません。デザイナーの小森啓二郎氏が目指しているのは、日本の気候と日本人の体型に、静かに寄り添う日常着なのだと感じます。そのために計算された「余白」こそが、このブランドの真髄であると   うのです。</p>
                 <h3>2. 素材と時間の関係（Material & Time）</h3>
                 <p>ブランドを象徴するコットンのギャバジン。手に入れた瞬間が完成ではありません。着込み、洗い、雨に打たれることで、少しずつその硬さが取れ、独特の膨らみとシワが刻まれていく過程にこそ魅力があります。そうして生まれる、使い込まれた美しさを肯定する姿勢が、このアーカイブの大きな柱になっています。</p>
                 <h3>3. デザイナーの立ち位置（Roots & Perspective）</h3>
@@ -253,7 +257,7 @@
                 <h3>2. 重なりが生む「空気」（Texture）</h3>
                 <p>デザイナーの浅川喜一朗氏が掲げる「stillness and motion（静と動）」。布が余っているのではなく、そこに「空気の層」を意図的に作り出している。その計算された重なりが、今の自分の動きを格好いいと思わせてくれる、そんな直感的な魅力があります。</p>
                 <h3>3. 設計と、都合のいい解釈（Architecture & Excuse）</h3>
-                <p>完璧な「設計」を、あえて着崩したり、日常の動作で汚していったりする。そこに生まれるギャップを、「自分だけの味」だと思い込む。それこそが、この少し高価な設計物を手に入れるための、最大の根拠で  り、いつもの「言い訳」なのだと思います。</p></div>`
+                <p>完璧な「設計」を、あえて着崩したり、日常の動作で汚していったりする。そこに生まれるギャップを、「自分だけの味」だと思い込む。それこそが、この少し高価な設計物を手に入れるための、最大の根拠であり、いつもの「言い訳」なのだと思います。</p></div>`
             },
             'forme': {
                 img: 'forme.jpg',
@@ -286,8 +290,7 @@
         }
 
         // 各ブランド表示
-        function showContent(e, key) {
-            e.stopPropagation();
+        function showContent(key) {
             document.getElementById('mainImage').src = data[key].img;
             document.getElementById('textArea').innerHTML = data[key].text;
             document.getElementById('navMenu').classList.remove('is-open');
