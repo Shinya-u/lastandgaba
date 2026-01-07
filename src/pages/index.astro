@@ -12,7 +12,8 @@
         --text: #333333;
         --accent: #999;
         --font-serif: "YuMincho", "Yu Mincho", serif;
-        --font-sans: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
+        --font-sans: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN",
+          "Hiragino Sans", sans-serif;
       }
 
       body {
@@ -20,11 +21,11 @@
         color: var(--text);
         font-family: var(--font-sans);
         margin: 0;
-        padding-top: 80px; /* ヘッダー高さぶん */
+        padding-top: 80px; /* ヘッダーのぶん下げる */
         overflow-x: hidden;
       }
 
-      /* --- 固定ヘッダー（タイトル＋ハンバーガー＋ドロップダウンメニュー） --- */
+      /* --- 固定ヘッダー（タイトル＋ハンバーガー＋ドロップダウン） --- */
       header.top-bar {
         position: fixed;
         top: 0;
@@ -32,12 +33,12 @@
         width: 100%;
         background-color: var(--bg);
         display: flex;
-        flex-direction: column;    /* タイトルの下にハンバーガーとメニューを縦並び */
+        flex-direction: column; /* タイトル → ハンバーガー → メニューを縦並び */
         align-items: flex-start;
         padding: 16px 40px 12px;
         box-sizing: border-box;
         z-index: 3000;
-        border-bottom: 1px solid rgba(0,0,0,0.05);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
       }
 
       .header-logo {
@@ -48,10 +49,10 @@
         color: var(--text);
         text-decoration: none;
         white-space: nowrap;
-        margin-bottom: 8px;       /* タイトルとハンバーガーの間 */
+        margin-bottom: 8px; /* タイトルとハンバーガーの間 */
       }
 
-      /* ハンバーガーボタン（左寄せ） */
+      /* ハンバーガーボタン（左に固定） */
       .menu-trigger {
         width: 30px;
         height: 20px;
@@ -59,7 +60,7 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        margin-bottom: 8px;       /* ボタンとメニューリストの間 */
+        margin-bottom: 8px; /* ボタンとメニューの間 */
       }
       .menu-trigger span {
         display: block;
@@ -69,20 +70,18 @@
         transition: 0.3s;
       }
 
-      /* ボタンONのとき、三本線を少し変形させたいならここで調整してもOK（今はそのまま） */
-
-      /* --- ハンバーガーの下に出るメニューリスト --- */
+      /* --- ハンバーガーの下に出るメニュー --- */
       nav {
-        width: 100%;
+        width: 240px; /* メニューの最大幅。広さはここで調整 */
       }
 
-      /* メ  ュー全体のボックス。ヘッダー内に収まる */
       .menu-panel {
-        display: none;            /* 初期は非表示 */
+        display: none; /* 初期は非表示 */
         padding: 8px 0 0;
+        width: 100%;   /* nav の中でいっぱいまで使う */
       }
       .menu-panel.is-open {
-        display: block;           /* ハンバーガークリックで表示 */
+        display: block; /* ハンバーガーで開閉 */
       }
 
       .menu-item {
@@ -178,6 +177,9 @@
         body {
           padding-top: 72px;
         }
+        nav {
+          width: 200px; /* スマホでは少し狭める */
+        }
         main {
           padding: 32px 20px;
         }
@@ -192,7 +194,7 @@
         <span></span><span></span><span></span>
       </div>
 
-      <!-- ハ   バーガーの下に出るメニュー -->
+      <!-- ハンバーガーの下に出るメニュー -->
       <nav>
         <div class="menu-panel" id="menuPanel">
           <div class="menu-item">
@@ -282,26 +284,24 @@
         const brandsToggle = document.getElementById('brandsToggle');
         const brandList = document.getElementById('brandList');
 
-        // ハンバーガー：メニュー全体の開閉
+        // ハンバーガー：メニュー開閉
         menuBtn.addEventListener('click', () => {
           menuPanel.classList.toggle('is-open');
         });
 
-        // ロゴクリックで INDEX に戻す
+        // ロゴクリックで INDEX に戻る
         logo.addEventListener('click', showIndex);
 
-        // BRANDS を押したときにサブメニュー開閉
+        // BRANDS のサブメニュー開閉
         brandsToggle.addEventListener('click', () => {
           brandList.classList.toggle('is-open');
         });
 
-        // 各ブランドをクリックしたときの表示切り替え
+        // 各ブランドクリックで内容切り替え
         document.querySelectorAll('#brandList li').forEach((li) => {
           li.addEventListener('click', () => {
             const key = li.getAttribute('data-key');
             showContent(key);
-            // メニューは開いたままにしておきたいならここは何もしない
-            // 閉じたければ menuPanel.classList.remove('is-open'); を追加
           });
         });
       });
