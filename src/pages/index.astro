@@ -20,25 +20,23 @@
         color: var(--text);
         font-family: var(--font-sans);
         margin: 0;
-        padding-top: 80px; /* ヘッダー高さぶん下げる */
+        padding-top: 80px; /* ヘッダー高さぶん */
         overflow-x: hidden;
       }
 
-      /* --- 固定ヘッダー（左にロゴ＋ハンバーガー） --- */
+      /* --- 固定ヘッダー（タイトル＋ハンバーガー＋ドロップダウンメニュー） --- */
       header.top-bar {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
-        height: 80px;
         background-color: var(--bg);
         display: flex;
-        align-items: center;
-        justify-content: flex-start; /* 左寄せ */
-        gap: 24px;                   /* ロゴとハンバーガーの間 */
-        padding: 0 40px;
+        flex-direction: column;    /* タイトルの下にハンバーガーとメニューを縦並び */
+        align-items: flex-start;
+        padding: 16px 40px 12px;
         box-sizing: border-box;
-        z-index: 3000;               /* メニューより手前 */
+        z-index: 3000;
         border-bottom: 1px solid rgba(0,0,0,0.05);
       }
 
@@ -50,9 +48,10 @@
         color: var(--text);
         text-decoration: none;
         white-space: nowrap;
+        margin-bottom: 8px;       /* タイトルとハンバーガーの間 */
       }
 
-      /* ハンバーガーボタン（ヘッダー内に固定） */
+      /* ハンバーガーボタン（左寄せ） */
       .menu-trigger {
         width: 30px;
         height: 20px;
@@ -60,6 +59,7 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        margin-bottom: 8px;       /* ボタンとメニューリストの間 */
       }
       .menu-trigger span {
         display: block;
@@ -69,56 +69,60 @@
         transition: 0.3s;
       }
 
-      /* --- 右スライドメニュー（ヘッダーの下から始まる） --- */
+      /* ボタンONのとき、三本線を少し変形させたいならここで調整してもOK（今はそのまま） */
+
+      /* --- ハンバーガーの下に出るメニューリスト --- */
       nav {
-        position: fixed;
-        top: 80px;                   /* ヘッダーの下から */
-        right: 0;
-        width: 300px;
-        height: calc(100% - 80px);   /* ヘッダー分を引いた高さ */
-        background-color: var(--bg);
-        padding: 40px;
-        box-sizing: border-box;
-        transform: translateX(100%); /* 初期は画面外 */
-        transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        z-index: 2500;               /* ヘッダー(3000)より後ろ */
-        border-left: 1px solid #eee;
-        overflow-y: auto;
-      }
-      nav.is-open {
-        transform: translateX(0);    /* 画面内に入る */
+        width: 100%;
       }
 
-      .menu-item { margin-bottom: 35px; cursor: pointer; }
+      /* メ  ュー全体のボックス。ヘッダー内に収まる */
+      .menu-panel {
+        display: none;            /* 初期は非表示 */
+        padding: 8px 0 0;
+      }
+      .menu-panel.is-open {
+        display: block;           /* ハンバーガークリックで表示 */
+      }
+
+      .menu-item {
+        margin-bottom: 10px;
+        cursor: pointer;
+      }
       .menu-number {
         font-size: 0.7rem;
         color: var(--accent);
         display: block;
-        margin-bottom: 5px;
+        margin-bottom: 2px;
       }
       .menu-label {
-        font-size: 0.95rem;
+        font-size: 0.85rem;
         letter-spacing: 0.2em;
       }
 
       .brand-tree {
         display: none;
         list-style: none;
-        padding: 20px 0 0 10px;
+        padding: 8px 0 0 12px;
         margin: 0;
       }
+      .brand-tree.is-open {
+        display: block;
+      }
       .brand-tree li {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         color: var(--accent);
-        margin-bottom: 15px;
+        margin-bottom: 8px;
         letter-spacing: 0.1em;
         cursor: pointer;
       }
-      .brand-tree li:hover { color: var(--text); }
+      .brand-tree li:hover {
+        color: var(--text);
+      }
 
       /* --- メインコンテンツ --- */
       main {
-        padding: 60px 5vw;
+        padding: 40px 5vw;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -129,7 +133,7 @@
         max-width: 900px;
         aspect-ratio: 3 / 2;
         background: #eee;
-        margin-bottom: 50px;
+        margin-bottom: 40px;
         overflow: hidden;
       }
       .hero-image img {
@@ -167,37 +171,15 @@
         text-align: justify;
       }
 
-      /* オーバーレイ（背景だけ暗くする。ヘッダーの下に出す） */
-      .overlay {
-        position: fixed;
-        top: 80px;                   /* ヘッダーの下から */
-        left: 0;
-        width: 100%;
-        height: calc(100% - 80px);
-        background: rgba(0,0,0,0.1);
-        display: none;
-        z-index: 2400;               /* nav より後ろ、main より前 */
-      }
-      .overlay.is-visible { display: block; }
-
       @media (max-width: 768px) {
         header.top-bar {
-          padding: 0 20px;
-          height: 60px;
+          padding: 12px 20px 8px;
         }
         body {
-          padding-top: 60px;
-        }
-        nav {
-          top: 60px;
-          height: calc(100% - 60px);
-        }
-        .overlay {
-          top: 60px;
-          height: calc(100% - 60px);
+          padding-top: 72px;
         }
         main {
-          padding: 40px 20px;
+          padding: 32px 20px;
         }
       }
     </style>
@@ -205,45 +187,45 @@
   <body>
     <header class="top-bar">
       <div class="header-logo" id="logo">LAST &amp; GABA Ver2</div>
+
       <div class="menu-trigger" id="menuBtn">
         <span></span><span></span><span></span>
       </div>
-    </header>
 
-    <!-- ヘッダーの下に広がるオーバーレイ -->
-    <div class="overlay" id="overlay"></div>
-
-    <!-- 右から出るメニュー。本体はヘッダーの下に配置 -->
-    <nav id="navMenu">
-      <div class="menu-item">
-        <span class="menu-number">01</span>
-        <span class="menu-label">ELEMENTS</span>
-      </div>
-      <div class="menu-item">
-        <span class="menu-number">02</span>
-        <span class="menu-label">PROGRESS</span>
-      </div>
-      <div class="menu-item">
-        <span class="menu-number">03</span>
-        <span class="menu-label">ESSAY</span>
-      </div>
-      <div class="menu-item">
-        <div id="brandsToggle">
-          <span class="menu-number">04</span>
-          <span class="menu-label">BRANDS</span>
+      <!-- ハ   バーガーの下に出るメニュー -->
+      <nav>
+        <div class="menu-panel" id="menuPanel">
+          <div class="menu-item">
+            <span class="menu-number">01</span>
+            <span class="menu-label">ELEMENTS</span>
+          </div>
+          <div class="menu-item">
+            <span class="menu-number">02</span>
+            <span class="menu-label">PROGRESS</span>
+          </div>
+          <div class="menu-item">
+            <span class="menu-number">03</span>
+            <span class="menu-label">ESSAY</span>
+          </div>
+          <div class="menu-item">
+            <div id="brandsToggle">
+              <span class="menu-number">04</span>
+              <span class="menu-label">BRANDS</span>
+            </div>
+            <ul id="brandList" class="brand-tree">
+              <li data-key="comoli">COMOLI</li>
+              <li data-key="ssstein">SSSTEIN</li>
+              <li data-key="forme">FORME</li>
+              <li data-key="manifold">MANIFOLD</li>
+            </ul>
+          </div>
         </div>
-        <ul id="brandList" class="brand-tree">
-          <li data-key="comoli">COMOLI</li>
-          <li data-key="ssstein">SSSTEIN</li>
-          <li data-key="forme">FORME</li>
-          <li data-key="manifold">MANIFOLD</li>
-        </ul>
-      </div>
-    </nav>
+      </nav>
+    </header>
 
     <main id="mainContent">
       <div class="hero-image">
-        <img id="mainImage" src="/hero.jpg" alt="">
+        <img id="mainImage" src="/hero.jpg" alt="" />
       </div>
       <div class="description" id="textArea">
         形。素材。時間。選別された、生活の構成要素。<br />
@@ -251,7 +233,6 @@
       </div>
     </main>
 
-    <!-- 生の JS をそのまま吐き出す -->
     <script is:raw>
       const indexData = {
         img: '/hero.jpg',
@@ -282,46 +263,45 @@
         }
       };
 
-      function toggleNav() {
-        const nav = document.getElementById('navMenu');
-        const overlay = document.getElementById('overlay');
-        nav.classList.toggle('is-open');
-        overlay.classList.toggle('is-visible');
-      }
-
       function showIndex() {
         document.getElementById('mainImage').src = indexData.img;
         document.getElementById('textArea').innerHTML = indexData.text;
-        document.getElementById('navMenu').classList.remove('is-open');
-        document.getElementById('overlay').classList.remove('is-visible');
         window.scrollTo(0, 0);
       }
 
       function showContent(key) {
         document.getElementById('mainImage').src = data[key].img;
         document.getElementById('textArea').innerHTML = data[key].text;
-        document.getElementById('navMenu').classList.remove('is-open');
-        document.getElementById('overlay').classList.remove('is-visible');
         window.scrollTo(0, 0);
       }
 
       document.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('menuBtn').addEventListener('click', toggleNav);
-        document.getElementById('overlay').addEventListener('click', toggleNav);
-        document.getElementById('logo').addEventListener('click', showIndex);
+        const menuBtn = document.getElementById('menuBtn');
+        const menuPanel = document.getElementById('menuPanel');
+        const logo = document.getElementById('logo');
+        const brandsToggle = document.getElementById('brandsToggle');
+        const brandList = document.getElementById('brandList');
 
-        document
-          .getElementById('brandsToggle')
-          .addEventListener('click', () => {
-            const list = document.getElementById('brandList');
-            list.style.display =
-              list.style.display === 'block' ? 'none' : 'block';
-          });
+        // ハンバーガー：メニュー全体の開閉
+        menuBtn.addEventListener('click', () => {
+          menuPanel.classList.toggle('is-open');
+        });
 
+        // ロゴクリックで INDEX に戻す
+        logo.addEventListener('click', showIndex);
+
+        // BRANDS を押したときにサブメニュー開閉
+        brandsToggle.addEventListener('click', () => {
+          brandList.classList.toggle('is-open');
+        });
+
+        // 各ブランドをクリックしたときの表示切り替え
         document.querySelectorAll('#brandList li').forEach((li) => {
           li.addEventListener('click', () => {
             const key = li.getAttribute('data-key');
             showContent(key);
+            // メニューは開いたままにしておきたいならここは何もしない
+            // 閉じたければ menuPanel.classList.remove('is-open'); を追加
           });
         });
       });
