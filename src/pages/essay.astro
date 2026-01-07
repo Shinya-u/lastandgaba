@@ -5,8 +5,7 @@
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <title>LAST &amp; GABA</title>
-    <!-- スマホで幅を正しく認識させる -->
+    <title>ESSAY | LAST &amp; GABA</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
       :root {
@@ -25,10 +24,9 @@
         margin: 0;
         padding-top: 80px;
         overflow-x: hidden;
-        font-size: 16px; /* ベースフォント */
+        font-size: 16px;
       }
 
-      /* --- 固定ヘッダー（左に3本線＋ロゴ） --- */
       header.top-bar {
         position: fixed;
         top: 0;
@@ -72,8 +70,6 @@
         white-space: nowrap;
       }
 
-      /* --- 左から出るオーバーレイメニュー --- */
-
       .menu-overlay {
         position: fixed;
         inset: 0;
@@ -92,7 +88,7 @@
         position: absolute;
         top: 0;
         left: 0;
-        width: 320px; /* PCデフォルト幅 */
+        width: 320px;
         max-width: 80vw;
         height: 100%;
         background: #111;
@@ -131,11 +127,12 @@
         cursor: pointer;
       }
 
-      /* 行内に番号＋ラベルを横並びで表示 */
       .menu-line {
         display: inline-flex;
         align-items: baseline;
         gap: 0.6em;
+        text-decoration: none;
+        color: inherit;
       }
 
       .menu-number {
@@ -143,13 +140,13 @@
         color: var(--accent);
       }
       .menu-label {
-        font-size: 0.9rem; /* PC 時 */
+        font-size: 0.9rem;
         letter-spacing: 0.2em;
       }
 
       .brand-tree {
         list-style: none;
-        padding: 6px 0 0 1.9em; /* 番号＋ラベル位置にそろえる */
+        padding: 6px 0 0 1.9em;
         margin: 0;
         display: none;
       }
@@ -157,36 +154,24 @@
         display: block;
       }
       .brand-tree li {
-        font-size: 0.85rem; /* PC 時 */
+        font-size: 0.85rem;
         color: #ccc;
         margin-bottom: 8px;
         letter-spacing: 0.1em;
-        cursor: pointer;
       }
-      .brand-tree li:hover {
+      .brand-tree a {
+        color: inherit;
+        text-decoration: none;
+      }
+      .brand-tree a:hover {
         color: #fff;
       }
 
-      /* --- メインコンテンツ --- */
       main {
         padding: 40px 5vw;
         display: flex;
         flex-direction: column;
         align-items: center;
-      }
-
-      .hero-image {
-        width: 100%;
-        max-width: 900px;
-        aspect-ratio: 3 / 2;
-        background: #eee;
-        margin-bottom: 40px;
-        overflow: hidden;
-      }
-      .hero-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
       }
 
       .description {
@@ -199,26 +184,6 @@
         text-align: left;
       }
 
-      .brand-content h2 {
-        font-size: 1.4rem;
-        font-weight: normal;
-        letter-spacing: 0.4em;
-        margin-bottom: 50px;
-        text-align: center;
-      }
-      .brand-content h3 {
-        font-size: 1rem;
-        margin-top: 45px;
-        margin-bottom: 15px;
-        border-left: 1px solid #333;
-        padding-left: 15px;
-      }
-      .brand-content p {
-        margin-bottom: 25px;
-        text-align: justify;
-      }
-
-      /* ===== スマホ幅でメニュー文字を「やや大きめ」→さらに一段だけ小さく ===== */
       @media (max-width: 768px) {
         header.top-bar {
           padding: 0 20px;
@@ -245,12 +210,12 @@
         }
 
         .menu-label {
-          font-size: 1.0rem;  /* 1.05 → 1.0 に */
+          font-size: 1rem;
           letter-spacing: 0.2em;
         }
 
         .brand-tree li {
-          font-size: 0.9rem; /* 0.95 → 0.9 に */
+          font-size: 0.9rem;
         }
 
         main {
@@ -264,7 +229,7 @@
       <div class="menu-trigger" id="menuBtn">
         <span></span><span></span><span></span>
       </div>
-      <div class="header-logo" id="logo">LAST &amp; GABA</div>
+      <a href="/" class="header-logo">LAST &amp; GABA</a>
     </header>
 
     <div class="menu-overlay" id="menuOverlay">
@@ -275,95 +240,96 @@
 
         <ul class="menu-list">
           <li class="menu-item">
-            <span class="menu-line">
+            <a class="menu-line" href="/elements">
               <span class="menu-number">01</span>
               <span class="menu-label">ELEMENTS</span>
-            </span>
+            </a>
           </li>
           <li class="menu-item">
-            <span class="menu-line">
+            <a class="menu-line" href="/progress">
               <span class="menu-number">02</span>
               <span class="menu-label">PROGRESS</span>
-            </span>
+            </a>
           </li>
-<li class="menu-item">
-  <a class="menu-line" href="/lastandgaba/essay">
-    <span class="menu-number">03</span>
-    <span class="menu-label">ESSAY</span>
-  </a>
-</li>          <li class="menu-item">
+          <li class="menu-item">
+            <a class="menu-line" href="/essay">
+              <span class="menu-number">03</span>
+              <span class="menu-label">ESSAY</span>
+            </a>
+          </li>
+          <li class="menu-item">
             <span class="menu-line" id="brandsToggle">
               <span class="menu-number">04</span>
               <span class="menu-label">BRANDS</span>
             </span>
             <ul id="brandList" class="brand-tree">
-              <li data-key="comoli">COMOLI</li>
-              <li data-key="ssstein">SSSTEIN</li>
-              <li data-key="forme">FORME</li>
-              <li data-key="manifold">MANIFOLD</li>
+              <li><a href="/brands/comoli">COMOLI</a></li>
+              <li><a href="/brands/ssstein">SSSTEIN</a></li>
+              <li><a href="/brands/forme">FORME</a></li>
+              <li><a href="/brands/manifold">MANIFOLD</a></li>
             </ul>
           </li>
         </ul>
       </div>
     </div>
 
-    <main id="mainContent">
-      <div class="hero-image">
-        <img id="mainImage" src="/lastandgaba/hero.jpg" alt="" />
-      </div>
-      <div class="description" id="textArea">
-        形。素材。時間。選別された、生活の構成要素。<br />
-        型の描く線と、生地が空気に馴染む様。日々の断片を、静かに記録する。
+    <main>
+      <!-- メイン画像 -->
+      <div
+        style="
+          width: 100%;
+          max-width: 900px;
+          margin: 0 auto 40px auto;
+          text-align: center;
+        "
+      >
+  <img
+    src="/lastandgaba/essay/forest-0001.jpg"
+    alt="森の風景"
+    style="
+      width: 100%;        /* ここを 100% にして親要素いっぱいまで広げる */
+      max-width: 720px;   /* 画像自体の最大横幅。お好みで 640 / 720 / 800 など */
+      height: 460px;
+      object-fit: cover;
+      display: block;
+      margin: 0 auto;
+    "
+  />      </div>
+
+      <!-- エッセイ本文 -->
+      <div class="description">
+        <section>
+          <h2 style="margin-bottom: 0.5em;">
+            <span style="font-size: 0.8rem; color: #999; margin-right: 0.75em;">
+              ESSAY 0001
+            </span>
+            <span style="font-size: 1.1rem; letter-spacing: 0.15em;">
+              森の写真について（仮タイトル）
+            </span>
+          </h2>
+
+          <p style="margin-bottom: 1.5em; font-size: 0.9rem; color: #777;">
+            2026 / LOCATION / NOTE
+          </p>
+
+          <p>
+            ここに日本語のテキストを書いてください。森の湿度、音の少なさ、
+            自分が着ていた服のこと、このあと何をしに行ったのか──自由に書いてOKです。
+          </p>
+
+          <p>
+            満足いく1本が書けたら、この &lt;section&gt; 全体をコピーして、
+            ESSAY 0002 としてタイトルや本文だけ差し替えていけば、エッセイを増やしていけます。
+          </p>
+        </section>
       </div>
     </main>
 
     <script is:raw>
-      const indexData = {
-        img: '/hero.jpg',
-        text:
-          '形。素材。時間。選別された、生活の構成要素。<br>型の描く線と、生地が空気に馴染む様。日々の断片を、静かに記録する。'
-      };
-
-      const data = {
-        comoli: {
-          img: '/comoli.jpg',
-          text:
-            '<div class="brand-content"><h2>COMOLI</h2><h3>思想の根幹</h3><p>COMOLIの服を手に取るとき、最初に感じるのは「軽さ」と「違和感」かもしれません。日本の気候と日本人の体型に静かに寄り添う日常着。そのために計算された「余白」こそが、このブランドの真髄であると思うのです。</p></div>'
-        },
-        ssstein: {
-          img: '/ssstein.jpg',
-          text:
-            '<div class="brand-content"><h2>SSSTEIN</h2><h3>静と動</h3><p>SSSTEINの服を鏡の前で合わせたとき、あのたっぷりとした袖の溜まりや、地面に吸い付くようなパンツの落ち感に驚きます。計算された重なりが「空気の層」を作り出し、静寂としての美しさを成立させています。</p></div>'
-        },
-        forme: {
-          img: '/forme.jpg',
-          text:
-            '<div class="brand-content"><h2>FORME</h2><h3>歩行を設計する</h3><p>日本人の足特有のボリュームを考慮しながらも、極めてシャープで色気があるライン。木型の完成度が高く、自分の身体の一部を拡張してくれるような、精密なフィッティングを感じさせてくれます。</p></div>'
-        },
-        manifold: {
-          img: '/manifold.jpg',
-          text:
-            '<div class="brand-content"><h2>MANIFOLD</h2><h3>圧倒的な強さ</h3><p>「構造と、その変化」を掲げるこのブランド。緻密に計算された設計と、選び抜かれた革。使い始めの硬さを、自分の手に馴染ませていく「調教」の時間は、このブランド特有の醍醐味です。</p></div>'
-        }
-      };
-
-      function showIndex() {
-        document.getElementById('mainImage').src = indexData.img;
-        document.getElementById('textArea').innerHTML = indexData.text;
-        window.scrollTo(0, 0);
-      }
-
-      function showContent(key) {
-        document.getElementById('mainImage').src = data[key].img;
-        document.getElementById('textArea').innerHTML = data[key].text;
-        window.scrollTo(0, 0);
-      }
-
       document.addEventListener('DOMContentLoaded', () => {
         const menuBtn = document.getElementById('menuBtn');
         const menuOverlay = document.getElementById('menuOverlay');
         const menuClose = document.getElementById('menuClose');
-        const logo = document.getElementById('logo');
         const brandsToggle = document.getElementById('brandsToggle');
         const brandList = document.getElementById('brandList');
 
@@ -374,28 +340,14 @@
           menuOverlay.classList.remove('is-open');
         };
 
-        menuBtn.addEventListener('click', openMenu);
-        menuClose.addEventListener('click', closeMenu);
-
-        menuOverlay.addEventListener('click', (e) => {
+        menuBtn?.addEventListener('click', openMenu);
+        menuClose?.addEventListener('click', closeMenu);
+        menuOverlay?.addEventListener('click', (e) => {
           if (e.target === menuOverlay) closeMenu();
         });
 
-        logo.addEventListener('click', () => {
-          showIndex();
-          closeMenu();
-        });
-
-        brandsToggle.addEventListener('click', () => {
-          brandList.classList.toggle('is-open');
-        });
-
-        document.querySelectorAll('#brandList li').forEach((li) => {
-          li.addEventListener('click', () => {
-            const key = li.getAttribute('data-key');
-            showContent(key);
-            closeMenu();
-          });
+        brandsToggle?.addEventListener('click', () => {
+          brandList?.classList.toggle('is-open');
         });
       });
     </script>
