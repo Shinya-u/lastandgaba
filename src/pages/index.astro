@@ -22,7 +22,7 @@
             overflow-x: hidden;
         }
 
-        /* --- 固定ヘッダー（タイトルとボタンを常に表示） --- */
+        /* --- 固定ヘッダー --- */
         header.top-bar {
             position: fixed;
             top: 0;
@@ -49,7 +49,7 @@
             white-space: nowrap;
         }
 
-        /* ハンバ   ガーボタン */
+        /* ハンバーガーボタン */
         .menu-trigger {
             width: 30px;
             height: 20px;
@@ -58,7 +58,6 @@
             flex-direction: column;
             justify-content: space-between;
         }
-
         .menu-trigger span {
             display: block;
             width: 100%;
@@ -67,26 +66,24 @@
             transition: 0.3s;
         }
 
-        /* --- サイドナビゲーション（右からスライド） --- */
+        /* --- 右スライドメニュー --- */
         nav {
             position: fixed;
             top: 0;
-            right: 0;                    /* 右端に配置 */
+            right: 0;
             width: 300px;
             height: 100%;
             background-color: var(--bg);
             padding: 100px 40px;
             box-sizing: border-box;
-            /* 初期状態は画面の外（右）に隠す */
-            transform: translateX(100%);
+            transform: translateX(100%); /* 初期は画面の外 */
             transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             z-index: 4000;
             border-left: 1px solid #eee;
             overflow-y: auto;
         }
-
         nav.is-open {
-            transform: translateX(0);     /* 画面内にスライドイン */
+            transform: translateX(0);     /* 画面内に入る */
         }
 
         .menu-item { margin-bottom: 35px; cursor: pointer; }
@@ -136,7 +133,6 @@
             text-align: left;
         }
 
-        /* ブランドコンテンツ */
         .brand-content h2 {
             font-size: 1.4rem;
             font-weight: normal;
@@ -156,7 +152,7 @@
             text-align: justify;
         }
 
-        /* オーバーレイ（メニューが開いた時の背景） */
+        /* オーバーレイ */
         .overlay {
             position: fixed;
             top: 0; left: 0;
@@ -222,10 +218,13 @@
         </div>
     </main>
 
+    <!-- JS は必ず body の一番最後に置く -->
     <script>
         function toggleNav() {
-            document.getElementById('navMenu').classList.toggle('is-open');
-            document.getElementById('overlay').classList.toggle('is-visible');
+            const nav = document.getElementById('navMenu');
+            const overlay = document.getElementById('overlay');
+            nav.classList.toggle('is-open');
+            overlay.classList.toggle('is-visible');
         }
 
         function toggleBrands() {
