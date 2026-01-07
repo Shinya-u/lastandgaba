@@ -49,7 +49,7 @@
             white-space: nowrap;
         }
 
-        /* ハンバーガーボタン */
+        /* ハンバ   ガーボタン */
         .menu-trigger {
             width: 30px;
             height: 20px;
@@ -67,16 +67,18 @@
             transition: 0.3s;
         }
 
-        /* --- サイドナビゲーション --- */
+        /* --- サイドナビゲーション（右からスライド） --- */
         nav {
             position: fixed;
             top: 0;
-            right: -320px; /* 右側に隠す */
+            right: 0;                    /* 右端に配置 */
             width: 300px;
             height: 100%;
             background-color: var(--bg);
             padding: 100px 40px;
             box-sizing: border-box;
+            /* 初期状態は画面の外（右）に隠す */
+            transform: translateX(100%);
             transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             z-index: 4000;
             border-left: 1px solid #eee;
@@ -84,50 +86,84 @@
         }
 
         nav.is-open {
-            transform: translateX(-320px);
+            transform: translateX(0);     /* 画面内にスライドイン */
         }
 
         .menu-item { margin-bottom: 35px; cursor: pointer; }
         .menu-number { font-size: 0.7rem; color: var(--accent); display: block; margin-bottom: 5px; }
         .menu-label { font-size: 0.95rem; letter-spacing: 0.2em; }
 
-        .brand-tree { 
-            display: none; list-style: none; padding: 20px 0 0 10px; margin: 0; 
+        .brand-tree {
+            display: none;
+            list-style: none;
+            padding: 20px 0 0 10px;
+            margin: 0;
         }
-        .brand-tree li { 
-            font-size: 0.85rem; color: var(--accent); margin-bottom: 15px; letter-spacing: 0.1em; cursor: pointer; 
+        .brand-tree li {
+            font-size: 0.85rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+            letter-spacing: 0.1em;
+            cursor: pointer;
         }
+        .brand-tree li:hover { color: var(--text); }
 
         /* --- メインコンテンツ --- */
-        main { 
-            padding: 60px 5vw; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
+        main {
+            padding: 60px 5vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .hero-image {
-            width: 100%; max-width: 900px; aspect-ratio: 3 / 2;
-            background: #eee; margin-bottom: 50px; overflow: hidden;
+            width: 100%;
+            max-width: 900px;
+            aspect-ratio: 3 / 2;
+            background: #eee;
+            margin-bottom: 50px;
+            overflow: hidden;
         }
         .hero-image img { width: 100%; height: 100%; object-fit: cover; }
 
         .description {
-            width: 100%; max-width: 900px;
+            width: 100%;
+            max-width: 900px;
             font-family: var(--font-serif);
-            line-height: 2.2; font-size: 0.95rem; color: #444;
+            line-height: 2.2;
+            font-size: 0.95rem;
+            color: #444;
             text-align: left;
         }
 
         /* ブランドコンテンツ */
-        .brand-content h2 { font-size: 1.4rem; font-weight: normal; letter-spacing: 0.4em; margin-bottom: 50px; text-align: center; }
-        .brand-content h3 { font-size: 1rem; margin-top: 45px; margin-bottom: 15px; border-left: 1px solid #333; padding-left: 15px; }
-        .brand-content p { margin-bottom: 25px; text-align: justify; }
+        .brand-content h2 {
+            font-size: 1.4rem;
+            font-weight: normal;
+            letter-spacing: 0.4em;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+        .brand-content h3 {
+            font-size: 1rem;
+            margin-top: 45px;
+            margin-bottom: 15px;
+            border-left: 1px solid #333;
+            padding-left: 15px;
+        }
+        .brand-content p {
+            margin-bottom: 25px;
+            text-align: justify;
+        }
 
         /* オーバーレイ（メニューが開いた時の背景） */
         .overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.1); display: none; z-index: 3500;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.1);
+            display: none;
+            z-index: 3500;
         }
         .overlay.is-visible { display: block; }
 
@@ -150,11 +186,23 @@
     <div class="overlay" id="overlay" onclick="toggleNav()"></div>
 
     <nav id="navMenu">
-        <div class="menu-item"><span class="menu-number">01</span><span class="menu-label">ELEMENTS</span></div>
-        <div class="menu-item"><span class="menu-number">02</span><span class="menu-label">PROGRESS</span></div>
-        <div class="menu-item"><span class="menu-number">03</span><span class="menu-label">ESSAY</span></div>
         <div class="menu-item">
-            <div onclick="toggleBrands()"><span class="menu-number">04</span><span class="menu-label">BRANDS</span></div>
+            <span class="menu-number">01</span>
+            <span class="menu-label">ELEMENTS</span>
+        </div>
+        <div class="menu-item">
+            <span class="menu-number">02</span>
+            <span class="menu-label">PROGRESS</span>
+        </div>
+        <div class="menu-item">
+            <span class="menu-number">03</span>
+            <span class="menu-label">ESSAY</span>
+        </div>
+        <div class="menu-item">
+            <div onclick="toggleBrands()">
+                <span class="menu-number">04</span>
+                <span class="menu-label">BRANDS</span>
+            </div>
             <ul id="brandList" class="brand-tree">
                 <li onclick="showContent('comoli')">COMOLI</li>
                 <li onclick="showContent('ssstein')">SSSTEIN</li>
@@ -191,10 +239,22 @@
         };
 
         const data = {
-            'comoli': { img: 'comoli.jpg', text: `<div class="brand-content"><h2>COMOLI</h2><h3>思想の根幹</h3><p>COMOLIの服を手に取るとき、最初に感じるのは「軽さ」と「違和感」かもしれません。日本の気候と日本人の体型に静かに寄り添う日常着。そのために計算された「余白」こそが、このブランドの真髄であると思うのです。</p></div>` },
-            'ssstein': { img: 'ssstein.jpg', text: `<div class="brand-content"><h2>SSSTEIN</h2><h3>静と動</h3><p>SSSTEINの服を鏡の前で合わせたとき、あのたっぷりとした袖の溜まりや、地面に吸い付くようなパンツの落ち感に驚きます。計算された重なりが「空気の層」を作り出し、静寂としての美しさを成立させています。</p></div>` },
-            'forme': { img: 'forme.jpg', text: `<div class="brand-content"><h2>FORME</h2><h3>歩行を設計する</h3><p>日本人の足特有のボリュームを考慮しながらも、極めてシャープで色気があるライン。木型の完成度が高く、自分の身体の一部を拡張してくれるような、精密なフィッティングを感じさせてくれます。</p></div>` },
-            'manifold': { img: 'manifold.jpg', text: `<div class="brand-content"><h2>MANIFOLD</h2><h3>圧倒的な強さ</h3><p>「構造と、その変化」を掲げるこのブランド。緻密に計算された設計と、選び抜かれた革。使い始めの硬さを、自分の手に馴染ませていく「調教」の時間は、このブランド特有の醍醐味です。</p></div>` }
+            'comoli': {
+                img: 'comoli.jpg',
+                text: `<div class="brand-content"><h2>COMOLI</h2><h3>思想の根幹</h3><p>COMOLIの服を手に取るとき、最初に感じるのは「軽さ」と「違和感」かもしれません。日本の気候と日本人の体型に静かに寄り添う日常着。そのために計算された「余白」こそが、このブランドの真髄であると思うのです。</p></div>`
+            },
+            'ssstein': {
+                img: 'ssstein.jpg',
+                text: `<div class="brand-content"><h2>SSSTEIN</h2><h3>静と動</h3><p>SSSTEINの服を鏡の前で合わせたとき、あのたっぷりとした袖の溜まりや、地面に吸い付くようなパンツの落ち感に驚きます。計算された重なりが「空気の層」を作り出し、静寂としての美しさを成立させています。</p></div>`
+            },
+            'forme': {
+                img: 'forme.jpg',
+                text: `<div class="brand-content"><h2>FORME</h2><h3>歩行を設計する</h3><p>日本人の足特有のボリュームを考慮しながらも、極めてシャープで色気があるライン。木型の完成度が高く、自分の身体の一部を拡張してくれるような、精密なフィッティングを感じさせてくれます。</p></div>`
+            },
+            'manifold': {
+                img: 'manifold.jpg',
+                text: `<div class="brand-content"><h2>MANIFOLD</h2><h3>圧倒的な強さ</h3><p>「構造と、その変化」を掲げるこのブランド。緻密に計算された設計と、選び抜かれた革。使い始めの硬さを、自分の手に馴染ませていく「調教」の時間は、このブランド特有の醍醐味です。</p></div>`
+            }
         };
 
         function showIndex() {
@@ -202,14 +262,15 @@
             document.getElementById('textArea').innerHTML = indexData.text;
             document.getElementById('navMenu').classList.remove('is-open');
             document.getElementById('overlay').classList.remove('is-visible');
-            window.scrollTo(0,0);
+            window.scrollTo(0, 0);
         }
 
         function showContent(key) {
             document.getElementById('mainImage').src = data[key].img;
             document.getElementById('textArea').innerHTML = data[key].text;
-            toggleNav();
-            window.scrollTo(0,0);
+            document.getElementById('navMenu').classList.remove('is-open');
+            document.getElementById('overlay').classList.remove('is-visible');
+            window.scrollTo(0, 0);
         }
     </script>
 </body>
