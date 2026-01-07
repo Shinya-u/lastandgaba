@@ -1,5 +1,8 @@
-// @ts-check
 import { defineConfig } from 'astro/config';
 
-// https://astro.build/config
-export default defineConfig({});
+export default defineConfig({
+  // あなたのサイトのURL
+  site: 'https://shinya-u.github.io',
+  // リポジトリ名。これを入れないと画像やCSSが読み込めません
+  base: '/lastandgaba',
+});
