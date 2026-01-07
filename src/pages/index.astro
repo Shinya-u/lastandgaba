@@ -25,7 +25,7 @@
         overflow-x: hidden;
       }
 
-      /* --- 固定ヘッダー（左にロゴ＋ハンバーガー） --- */
+      /* --- 固定ヘッダー（左に3本線＋ロゴ） --- */
       header.top-bar {
         position: fixed;
         top: 0;
@@ -35,22 +35,12 @@
         background-color: var(--bg);
         display: flex;
         align-items: center;
-        justify-content: flex-start; /* 左寄せ */
-        gap: 24px;                   /* ロゴとハンバーガーの間 */
+        justify-content: flex-start;
         padding: 0 40px;
         box-sizing: border-box;
         z-index: 3000;
         border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-      }
-
-      .header-logo {
-        font-family: var(--font-serif);
-        font-size: 1.1rem;
-        letter-spacing: 0.4em;
-        cursor: pointer;
-        color: var(--text);
-        text-decoration: none;
-        white-space: nowrap;
+        gap: 24px; /* 3本線とロゴの間 */
       }
 
       .menu-trigger {
@@ -67,6 +57,16 @@
         height: 2px;
         background-color: #333;
         transition: 0.3s;
+      }
+
+      .header-logo {
+        font-family: var(--font-serif);
+        font-size: 1.1rem;
+        letter-spacing: 0.4em;
+        cursor: pointer;
+        color: var(--text);
+        text-decoration: none;
+        white-space: nowrap;
       }
 
       /* --- 左から出るオーバーレイメニュー --- */
@@ -89,7 +89,7 @@
         position: absolute;
         top: 0;
         left: 0;
-        width: 320px;             /* パネルの横幅（好みに応じて調整） */
+        width: 320px; /* パネルの横幅 */
         max-width: 80vw;
         height: 100%;
         background: #111;
@@ -229,15 +229,15 @@
     </style>
   </head>
   <body>
-    <!-- 左にロゴ＋ハンバーガー -->
+    <!-- 左に 3本線 ＋ ロゴ -->
     <header class="top-bar">
-      <div class="header-logo" id="logo">LAST &amp; GABA Ver2</div>
       <div class="menu-trigger" id="menuBtn">
         <span></span><span></span><span></span>
       </div>
+      <div class="header-logo" id="logo">LAST &amp; GABA Ver2</div>
     </header>
 
-    <!-- 左から覆いかぶさるメニュー（パネルも左） -->
+    <!-- 左から覆いかぶさるメニュー -->
     <div class="menu-overlay" id="menuOverlay">
       <div class="menu-panel">
         <div class="menu-close" id="menuClose">×</div>
@@ -304,7 +304,7 @@
         forme: {
           img: '/forme.jpg',
           text:
-            '<div class="brand-content"><h2>FORME</h2><h3>歩行を設計する</h3><p>日本人の足特有のボリュームを考慮しながらも、極めてシャープで色気があるライン。木型の完成度が高く、自分の身体の一部を拡張してくれるような、精密なフィッティングを感じさせてくれます。</p></div>'
+            '<div class="brand-content"><h2>FORME</h2><h3>歩行を設計する</h3><p>日本人の足特有のボリュームを考慮しながらも、極めてシャープで色気があるライン。木型の完成度が   く、自分の身体の一部を拡張してくれるような、精密なフィッティングを感じさせてくれます。</p></div>'
         },
         manifold: {
           img: '/manifold.jpg',
