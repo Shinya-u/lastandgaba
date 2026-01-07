@@ -25,6 +25,7 @@
         overflow-x: hidden;
       }
 
+      /* --- 固定ヘッダー（左に3本線＋ロゴ） --- */
       header.top-bar {
         position: fixed;
         top: 0;
@@ -68,6 +69,8 @@
         white-space: nowrap;
       }
 
+      /* --- 左から出るオーバーレイメニュー --- */
+
       .menu-overlay {
         position: fixed;
         inset: 0;
@@ -86,7 +89,7 @@
         position: absolute;
         top: 0;
         left: 0;
-        width: 320px;
+        width: 320px; /* PCデフォルト幅 */
         max-width: 80vw;
         height: 100%;
         background: #111;
@@ -155,6 +158,7 @@
         color: #fff;
       }
 
+      /* --- メインコンテンツ --- */
       main {
         padding: 40px 5vw;
         display: flex;
@@ -205,7 +209,7 @@
         text-align: justify;
       }
 
-      /* === スマホ用・文字をかなり大きめに === */
+      /* ===== スマホ時に文字をしっかり大きくする（強制） ===== */
       @media (max-width: 768px) {
         header.top-bar {
           padding: 0 20px;
@@ -217,27 +221,27 @@
         }
 
         .menu-panel {
-          width: 280px;
-          padding: 24px 24px;
+          width: 280px !important;
+          padding: 24px 24px !important;
         }
 
         .menu-title {
-          font-size: 1.3rem;     /* タイトルをしっかり大きく */
-          letter-spacing: 0.35em;
-          margin-bottom: 32px;
+          font-size: 1.4rem !important;
+          letter-spacing: 0.35em !important;
+          margin-bottom: 32px !important;
         }
 
         .menu-number {
-          font-size: 0.9rem;     /* 01/02 の数字もだいぶ大きく */
+          font-size: 1.0rem !important;
         }
 
         .menu-label {
-          font-size: 1.1rem;     /* ELEMENTS など、がっつり大きく */
-          letter-spacing: 0.22em;
+          font-size: 1.4rem !important;
+          letter-spacing: 0.24em !important;
         }
 
         .brand-tree li {
-          font-size: 1.0rem;     /* ブランド名も1remまでアップ */
+          font-size: 1.3rem !important;
         }
 
         main {
@@ -320,7 +324,7 @@
         forme: {
           img: '/forme.jpg',
           text:
-            '<div class="brand-content"><h2>FORME</h2><h3>歩行を設計する</h3><p>日本人の足特有のボリュームを考慮しながらも、極めてシャープで色気があるライン。木型の完成度が高く、自分の身体の一部を拡張してくれるような、精密なフィッティングを感じさせてくれます。</p></div>'
+            '<div class="brand-content"><h2>FORME</h2><h3>歩行を設計する</h3><p>日本人の足特有のボリュームを考慮しながらも、極めてシャープで色気があるライン。木型の完成度が高く、自分の身体の一部を拡張してくれるような、精密なフィッティングを感じさせてくれま   。</p></div>'
         },
         manifold: {
           img: '/manifold.jpg',
