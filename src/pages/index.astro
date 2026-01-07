@@ -21,11 +21,11 @@
         color: var(--text);
         font-family: var(--font-sans);
         margin: 0;
-        padding-top: 80px; /* ヘッダー高さぶん下げる */
+        padding-top: 80px; /* ヘッダーぶん下げる */
         overflow-x: hidden;
       }
 
-      /* --- 固定ヘッダー（ロゴ＋ハンバーガーだけ） --- */
+      /* --- 固定ヘッダー（左にロゴ＋ハンバーガー） --- */
       header.top-bar {
         position: fixed;
         top: 0;
@@ -35,7 +35,8 @@
         background-color: var(--bg);
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: flex-start; /* 左寄せ */
+        gap: 24px;                   /* ロゴとハンバーガーの間 */
         padding: 0 40px;
         box-sizing: border-box;
         z-index: 3000;
@@ -52,7 +53,6 @@
         white-space: nowrap;
       }
 
-      /* ハンバーガーボタン（常に右上に） */
       .menu-trigger {
         width: 28px;
         height: 18px;
@@ -60,7 +60,6 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        z-index: 3100; /* オーバーレイより手前にしてもよいが、今回はメニュー内に×を置くので普通でOK */
       }
       .menu-trigger span {
         display: block;
@@ -72,7 +71,6 @@
 
       /* --- 左から出るオーバーレイメニュー --- */
 
-      /* 全画面の半透明レイヤー */
       .menu-overlay {
         position: fixed;
         inset: 0;
@@ -87,15 +85,14 @@
         pointer-events: auto;
       }
 
-      /* 左側のパネル本体   COMOLI っぽい感じ） */
       .menu-panel {
         position: absolute;
         top: 0;
         left: 0;
-        width: 320px;             /* パネルの横幅：ここで調整できる */
+        width: 320px;             /* パネルの横幅（好みに応じて調整） */
         max-width: 80vw;
         height: 100%;
-        background: #111;         /* ほぼ黒 */
+        background: #111;
         color: #f5f5f5;
         box-sizing: border-box;
         padding: 32px 40px;
@@ -103,10 +100,9 @@
         transition: transform 0.3s ease;
       }
       .menu-overlay.is-open .menu-panel {
-        transform: translateX(0); /* 画面内へスライドイン */
+        transform: translateX(0);
       }
 
-      /* × ボタン */
       .menu-close {
         font-size: 24px;
         line-height: 1;
@@ -114,7 +110,6 @@
         margin-bottom: 40px;
       }
 
-      /* メニューロゴ（左上の「LAST & GABA」みたいな位置） */
       .menu-title {
         font-family: var(--font-serif);
         font-size: 1.1rem;
@@ -143,7 +138,6 @@
         letter-spacing: 0.2em;
       }
 
-      /* BRANDS のサブメニュー */
       .brand-tree {
         list-style: none;
         padding: 8px 0 0 14px;
@@ -219,6 +213,7 @@
         header.top-bar {
           padding: 0 20px;
           height: 60px;
+          gap: 16px;
         }
         body {
           padding-top: 60px;
@@ -234,7 +229,7 @@
     </style>
   </head>
   <body>
-    <!-- 画面上部：ロゴ＋ハンバーガーだけ -->
+    <!-- 左にロゴ＋ハンバーガー -->
     <header class="top-bar">
       <div class="header-logo" id="logo">LAST &amp; GABA Ver2</div>
       <div class="menu-trigger" id="menuBtn">
@@ -242,7 +237,7 @@
       </div>
     </header>
 
-    <!-- 左から覆いかぶさるメニュー -->
+    <!-- 左から覆いかぶさるメニュー（パネルも左） -->
     <div class="menu-overlay" id="menuOverlay">
       <div class="menu-panel">
         <div class="menu-close" id="menuClose">×</div>
@@ -348,30 +343,24 @@
         menuBtn.addEventListener('click', openMenu);
         menuClose.addEventListener('click', closeMenu);
 
-        // オーバーレイの「黒いところ」をクリックしても閉じる
         menuOverlay.addEventListener('click', (e) => {
-          if (e.target === menuOverlay) {
-            closeMenu();
-          }
+          if (e.target === menuOverlay) closeMenu();
         });
 
-        // ロゴクリックで INDEX に戻す
         logo.addEventListener('click', () => {
           showIndex();
           closeMenu();
         });
 
-        // BRANDS サブメニュー開閉
         brandsToggle.addEventListener('click', () => {
           brandList.classList.toggle('is-open');
         });
 
-        // 各ブランドクリックで内容切り替え＋メニュー閉じるかどうかは好み
         document.querySelectorAll('#brandList li').forEach((li) => {
           li.addEventListener('click', () => {
             const key = li.getAttribute('data-key');
             showContent(key);
-            closeMenu(); // 表示したらメニューを閉じる
+            closeMenu();
           });
         });
       });
