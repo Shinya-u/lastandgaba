@@ -21,21 +21,22 @@
         color: var(--text);
         font-family: var(--font-sans);
         margin: 0;
-        padding-top: 80px; /* ヘッダーのぶん下げる */
+        padding-top: 80px; /* ヘッダー高さぶん下げる */
         overflow-x: hidden;
       }
 
-      /* --- 固定ヘッダー（タイトル＋ハンバーガー＋ドロップダウン） --- */
+      /* --- 固定ヘッダー（ロゴ＋ハンバーガーだけ） --- */
       header.top-bar {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
+        height: 80px;
         background-color: var(--bg);
         display: flex;
-        flex-direction: column; /* タイトル → ハンバーガー → メニューを縦並び */
-        align-items: flex-start;
-        padding: 16px 40px 12px;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 40px;
         box-sizing: border-box;
         z-index: 3000;
         border-bottom: 1px solid rgba(0, 0, 0, 0.05);
@@ -49,18 +50,17 @@
         color: var(--text);
         text-decoration: none;
         white-space: nowrap;
-        margin-bottom: 8px; /* タイトルとハンバーガーの間 */
       }
 
-      /* ハンバーガーボタン（左に固定） */
+      /* ハンバーガーボタン（常に右上に） */
       .menu-trigger {
-        width: 30px;
-        height: 20px;
+        width: 28px;
+        height: 18px;
         cursor: pointer;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        margin-bottom: 8px; /* ボタンとメニューの間 */
+        z-index: 3100; /* オーバーレイより手前にしてもよいが、今回はメニュー内に×を置くので普通でOK */
       }
       .menu-trigger span {
         display: block;
@@ -70,53 +70,98 @@
         transition: 0.3s;
       }
 
-      /* --- ハンバーガーの下に出るメニュー --- */
-      nav {
-        width: 240px; /* メニューの最大幅。広さはここで調整 */
+      /* --- 左から出るオーバーレイメニュー --- */
+
+      /* 全画面の半透明レイヤー */
+      .menu-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.35);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+        z-index: 3200;
+      }
+      .menu-overlay.is-open {
+        opacity: 1;
+        pointer-events: auto;
       }
 
+      /* 左側のパネル本体   COMOLI っぽい感じ） */
       .menu-panel {
-        display: none; /* 初期は非表示 */
-        padding: 8px 0 0;
-        width: 100%;   /* nav の中でいっぱいまで使う */
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 320px;             /* パネルの横幅：ここで調整できる */
+        max-width: 80vw;
+        height: 100%;
+        background: #111;         /* ほぼ黒 */
+        color: #f5f5f5;
+        box-sizing: border-box;
+        padding: 32px 40px;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
       }
-      .menu-panel.is-open {
-        display: block; /* ハンバーガーで開閉 */
+      .menu-overlay.is-open .menu-panel {
+        transform: translateX(0); /* 画面内へスライドイン */
+      }
+
+      /* × ボタン */
+      .menu-close {
+        font-size: 24px;
+        line-height: 1;
+        cursor: pointer;
+        margin-bottom: 40px;
+      }
+
+      /* メニューロゴ（左上の「LAST & GABA」みたいな位置） */
+      .menu-title {
+        font-family: var(--font-serif);
+        font-size: 1.1rem;
+        letter-spacing: 0.4em;
+        margin-bottom: 40px;
+      }
+
+      .menu-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
       }
 
       .menu-item {
-        margin-bottom: 10px;
+        margin-bottom: 16px;
         cursor: pointer;
       }
       .menu-number {
         font-size: 0.7rem;
         color: var(--accent);
         display: block;
-        margin-bottom: 2px;
+        margin-bottom: 4px;
       }
       .menu-label {
         font-size: 0.85rem;
         letter-spacing: 0.2em;
       }
 
+      /* BRANDS のサブメニュー */
       .brand-tree {
-        display: none;
         list-style: none;
-        padding: 8px 0 0 12px;
+        padding: 8px 0 0 14px;
         margin: 0;
+        display: none;
       }
       .brand-tree.is-open {
         display: block;
       }
       .brand-tree li {
         font-size: 0.8rem;
-        color: var(--accent);
+        color: #ccc;
         margin-bottom: 8px;
         letter-spacing: 0.1em;
         cursor: pointer;
       }
       .brand-tree li:hover {
-        color: var(--text);
+        color: #fff;
       }
 
       /* --- メインコンテンツ --- */
@@ -172,13 +217,15 @@
 
       @media (max-width: 768px) {
         header.top-bar {
-          padding: 12px 20px 8px;
+          padding: 0 20px;
+          height: 60px;
         }
         body {
-          padding-top: 72px;
+          padding-top: 60px;
         }
-        nav {
-          width: 200px; /* スマホでは少し狭める */
+        .menu-panel {
+          width: 260px;
+          padding: 24px 24px;
         }
         main {
           padding: 32px 20px;
@@ -187,29 +234,35 @@
     </style>
   </head>
   <body>
+    <!-- 画面上部：ロゴ＋ハンバーガーだけ -->
     <header class="top-bar">
       <div class="header-logo" id="logo">LAST &amp; GABA Ver2</div>
-
       <div class="menu-trigger" id="menuBtn">
         <span></span><span></span><span></span>
       </div>
+    </header>
 
-      <!-- ハンバーガーの下に出るメニュー -->
-      <nav>
-        <div class="menu-panel" id="menuPanel">
-          <div class="menu-item">
+    <!-- 左から覆いかぶさるメニュー -->
+    <div class="menu-overlay" id="menuOverlay">
+      <div class="menu-panel">
+        <div class="menu-close" id="menuClose">×</div>
+
+        <div class="menu-title">LAST &amp; GABA</div>
+
+        <ul class="menu-list">
+          <li class="menu-item">
             <span class="menu-number">01</span>
             <span class="menu-label">ELEMENTS</span>
-          </div>
-          <div class="menu-item">
+          </li>
+          <li class="menu-item">
             <span class="menu-number">02</span>
             <span class="menu-label">PROGRESS</span>
-          </div>
-          <div class="menu-item">
+          </li>
+          <li class="menu-item">
             <span class="menu-number">03</span>
             <span class="menu-label">ESSAY</span>
-          </div>
-          <div class="menu-item">
+          </li>
+          <li class="menu-item">
             <div id="brandsToggle">
               <span class="menu-number">04</span>
               <span class="menu-label">BRANDS</span>
@@ -220,10 +273,10 @@
               <li data-key="forme">FORME</li>
               <li data-key="manifold">MANIFOLD</li>
             </ul>
-          </div>
-        </div>
-      </nav>
-    </header>
+          </li>
+        </ul>
+      </div>
+    </div>
 
     <main id="mainContent">
       <div class="hero-image">
@@ -279,29 +332,46 @@
 
       document.addEventListener('DOMContentLoaded', () => {
         const menuBtn = document.getElementById('menuBtn');
-        const menuPanel = document.getElementById('menuPanel');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const menuClose = document.getElementById('menuClose');
         const logo = document.getElementById('logo');
         const brandsToggle = document.getElementById('brandsToggle');
         const brandList = document.getElementById('brandList');
 
-        // ハンバーガー：メニュー開閉
-        menuBtn.addEventListener('click', () => {
-          menuPanel.classList.toggle('is-open');
+        const openMenu = () => {
+          menuOverlay.classList.add('is-open');
+        };
+        const closeMenu = () => {
+          menuOverlay.classList.remove('is-open');
+        };
+
+        menuBtn.addEventListener('click', openMenu);
+        menuClose.addEventListener('click', closeMenu);
+
+        // オーバーレイの「黒いところ」をクリックしても閉じる
+        menuOverlay.addEventListener('click', (e) => {
+          if (e.target === menuOverlay) {
+            closeMenu();
+          }
         });
 
-        // ロゴクリックで INDEX に戻る
-        logo.addEventListener('click', showIndex);
+        // ロゴクリックで INDEX に戻す
+        logo.addEventListener('click', () => {
+          showIndex();
+          closeMenu();
+        });
 
-        // BRANDS のサブメニュー開閉
+        // BRANDS サブメニュー開閉
         brandsToggle.addEventListener('click', () => {
           brandList.classList.toggle('is-open');
         });
 
-        // 各ブランドクリックで内容切り替え
+        // 各ブランドクリックで内容切り替え＋メニュー閉じるかどうかは好み
         document.querySelectorAll('#brandList li').forEach((li) => {
           li.addEventListener('click', () => {
             const key = li.getAttribute('data-key');
             showContent(key);
+            closeMenu(); // 表示したらメニューを閉じる
           });
         });
       });
