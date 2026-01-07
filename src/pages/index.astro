@@ -1,16 +1,155 @@
+---
+---
+
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <title>TEST LAST & GABA</title>
-</head>
-<body>
-  <button onclick="toggleNav()">MENU TEST</button>
+  <head>
+    <meta charset="UTF-8" />
+    <title>LAST & GABA Ver2</title>
+    <style>
+      :root {
+        --bg: #FAF9F6;
+        --text: #333333;
+        --accent: #999;
+        --font-serif: "YuMincho", "Yu Mincho", serif;
+        --font-sans: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
+      }
 
-  <script>
-    function toggleNav() {
-      alert('toggleNav OK');
-    }
-  </script>
-</body>
-</html>
+      body {
+        background-color: var(--bg);
+        color: var(--text);
+        font-family: var(--font-sans);
+        margin: 0;
+        padding-top: 80px;
+        overflow-x: hidden;
+      }
+
+      header.top-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 80px;
+        background-color: var(--bg);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 40px;
+        box-sizing: border-box;
+        z-index: 3000;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+      }
+
+      .header-logo {
+        font-family: var(--font-serif);
+        font-size: 1.1rem;
+        letter-spacing: 0.4em;
+        cursor: pointer;
+        color: var(--text);
+        text-decoration: none;
+        white-space: nowrap;
+      }
+
+      .menu-trigger {
+        width: 30px;
+        height: 20px;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .menu-trigger span {
+        display: block;
+        width: 100%;
+        height: 2px;
+        background-color: #333;
+        transition: 0.3s;
+      }
+
+      nav {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 300px;
+        height: 100%;
+        background-color: var(--bg);
+        padding: 100px 40px;
+        box-sizing: border-box;
+        transform: translateX(100%);
+        transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+        z-index: 4000;
+        border-left: 1px solid #eee;
+        overflow-y: auto;
+      }
+      nav.is-open {
+        transform: translateX(0);
+      }
+
+      .menu-item { margin-bottom: 35px; cursor: pointer; }
+      .menu-number { font-size: 0.7rem; color: var(--accent); display: block; margin-bottom: 5px; }
+      .menu-label { font-size: 0.95rem; letter-spacing: 0.2em; }
+
+      .brand-tree {
+        display: none;
+        list-style: none;
+        padding: 20px 0 0 10px;
+        margin: 0;
+      }
+      .brand-tree li {
+        font-size: 0.85rem;
+        color: var(--accent);
+        margin-bottom: 15px;
+        letter-spacing: 0.1em;
+        cursor: pointer;
+      }
+      .brand-tree li:hover { color: var(--text); }
+
+      main {
+        padding: 60px 5vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .hero-image {
+        width: 100%;
+        max-width: 900px;
+        aspect-ratio: 3 / 2;
+        background: #eee;
+        margin-bottom: 50px;
+        overflow: hidden;
+      }
+      .hero-image img { width: 100%; height: 100%; object-fit: cover; }
+
+      .description {
+        width: 100%;
+        max-width: 900px;
+        font-family: var(--font-serif);
+        line-height: 2.2;
+        font-size: 0.95rem;
+        color: #444;
+        text-align: left;
+      }
+
+      .brand-content h2 {
+        font-size: 1.4rem;
+        font-weight: normal;
+        letter-spacing: 0.4em;
+        margin-bottom: 50px;
+        text-align: center;
+      }
+      .brand-content h3 {
+        font-size: 1rem;
+        margin-top: 45px;
+        margin-bottom: 15px;
+        border-left: 1px solid #333;
+        padding-left: 15px;
+      }
+      .brand-content p {
+        margin-bottom: 25px;
+        text-align: justify;
+      }
+
+      .overlay {
+        position
+
