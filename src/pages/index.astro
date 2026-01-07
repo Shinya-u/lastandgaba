@@ -130,11 +130,17 @@
         margin-bottom: 16px;
         cursor: pointer;
       }
+
+      /* 行内に番号＋ラベルを横並びで表示 */
+      .menu-line {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 0.6em;
+      }
+
       .menu-number {
         font-size: 0.7rem;
         color: var(--accent);
-        display: block;
-        margin-bottom: 4px;
       }
       .menu-label {
         font-size: 0.9rem; /* PC 時 */
@@ -143,7 +149,7 @@
 
       .brand-tree {
         list-style: none;
-        padding: 8px 0 0 14px;
+        padding: 6px 0 0 1.9em; /* 番号＋ラベル位置にそろえる */
         margin: 0;
         display: none;
       }
@@ -212,7 +218,7 @@
         text-align: justify;
       }
 
-      /* ===== スマホ幅でメニュー文字を「やや大きめ」くらいに ===== */
+      /* ===== スマホ幅でメニュー文字を「やや大きめ」→さらに一段だけ小さく ===== */
       @media (max-width: 768px) {
         header.top-bar {
           padding: 0 20px;
@@ -224,31 +230,31 @@
         }
 
         .menu-panel {
-          width: 250px;
-          padding: 20px 18px;
+          width: 240px;
+          padding: 20px 16px;
         }
 
         .menu-title {
-          font-size: 1.15rem;
+          font-size: 1.1rem;
           letter-spacing: 0.3em;
-          margin-bottom: 24px;
+          margin-bottom: 22px;
         }
 
         .menu-number {
-          font-size: 0.8rem;
+          font-size: 0.75rem;
         }
 
         .menu-label {
-          font-size: 1.05rem;
+          font-size: 1.0rem;  /* 1.05 → 1.0 に */
           letter-spacing: 0.2em;
         }
 
         .brand-tree li {
-          font-size: 0.95rem;
+          font-size: 0.9rem; /* 0.95 → 0.9 に */
         }
 
         main {
-          padding: 30px 18px;
+          padding: 28px 16px;
         }
       }
     </style>
@@ -269,22 +275,28 @@
 
         <ul class="menu-list">
           <li class="menu-item">
-            <span class="menu-number">01</span>
-            <span class="menu-label">ELEMENTS</span>
+            <span class="menu-line">
+              <span class="menu-number">01</span>
+              <span class="menu-label">ELEMENTS</span>
+            </span>
           </li>
           <li class="menu-item">
-            <span class="menu-number">02</span>
-            <span class="menu-label">PROGRESS</span>
+            <span class="menu-line">
+              <span class="menu-number">02</span>
+              <span class="menu-label">PROGRESS</span>
+            </span>
           </li>
           <li class="menu-item">
-            <span class="menu-number">03</span>
-            <span class="menu-label">ESSAY</span>
+            <span class="menu-line">
+              <span class="menu-number">03</span>
+              <span class="menu-label">ESSAY</span>
+            </span>
           </li>
           <li class="menu-item">
-            <div id="brandsToggle">
+            <span class="menu-line" id="brandsToggle">
               <span class="menu-number">04</span>
               <span class="menu-label">BRANDS</span>
-            </div>
+            </span>
             <ul id="brandList" class="brand-tree">
               <li data-key="comoli">COMOLI</li>
               <li data-key="ssstein">SSSTEIN</li>
