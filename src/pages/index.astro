@@ -6,6 +6,8 @@
   <head>
     <meta charset="UTF-8" />
     <title>LAST &amp; GABA Ver2</title>
+    <!-- これが超重要：スマホで幅を正しく認識させる -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
       :root {
         --bg: #FAF9F6;
@@ -23,6 +25,7 @@
         margin: 0;
         padding-top: 80px;
         overflow-x: hidden;
+        font-size: 16px; /* ベースフォント */
       }
 
       /* --- 固定ヘッダー（左に3本線＋ロゴ） --- */
@@ -134,7 +137,7 @@
         margin-bottom: 4px;
       }
       .menu-label {
-        font-size: 0.85rem;
+        font-size: 0.9rem;  /* PC 時 */
         letter-spacing: 0.2em;
       }
 
@@ -148,7 +151,7 @@
         display: block;
       }
       .brand-tree li {
-        font-size: 0.8rem;
+        font-size: 0.85rem; /* PC 時 */
         color: #ccc;
         margin-bottom: 8px;
         letter-spacing: 0.1em;
