@@ -1,112 +1,87 @@
 ---
-// 共通パーツを読み込む
-import Navigation from '../../components/Navigation.astro';
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
 ---
+<Layout title="MANIFOLD | LAST &amp; GABA">
+  <style>
+    main {
+      padding: 40px 5vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-<!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <title>MANIFOLD | LAST &amp; GABA</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <style>
-      :root {
-        --bg: #FAF9F6;
-        --text: #333333;
-        --accent: #999;
-        --font-serif: "YuMincho", "Yu Mincho", serif;
-        --font-sans: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
-      }
-      body {
-        background-color: var(--bg);
-        color: var(--text);
-        font-family: var(--font-sans);
-        margin: 0;
-        padding-top: 80px;
-        overflow-x: hidden;
-      }
+    .hero-image {
+      width: 100%;
+      max-width: 900px;
+      aspect-ratio: 3 / 2;
+      background: #eee;
+      margin-bottom: 40px;
+      overflow: hidden;
+    }
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .description {
+      width: 100%;
+      max-width: 900px;
+      font-family: var(--font-serif);
+      line-height: 2.2;
+      font-size: 0.95rem;
+      color: #444;
+      text-align: left;
+    }
+
+    .brand-content h2 {
+      font-size: 1.4rem;
+      font-weight: normal;
+      letter-spacing: 0.4em;
+      margin-bottom: 50px;
+      text-align: center;
+    }
+    .brand-content h3 {
+      font-size: 1rem;
+      margin-top: 45px;
+      margin-bottom: 15px;
+      border-left: 1px solid #333;
+      padding-left: 15px;
+    }
+    .brand-content p {
+      margin-bottom: 25px;
+      text-align: justify;
+    }
+
+    @media (max-width: 768px) {
       main {
-        padding: 40px 5vw;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        padding: 28px 16px;
       }
-      .brand-content {
-        width: 100%;
-        max-width: 900px;
-        text-align: left;
-      }
-      .brand-title {
-        font-family: var(--font-serif);
-        font-size: 1.5rem;
-        letter-spacing: 0.3em;
-        margin-bottom: 40px;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        padding-bottom: 10px;
-      }
-      .brand-description {
-        font-family: var(--font-serif);
-        line-height: 2.2;
-        font-size: 0.95rem;
-        color: #444;
-        margin-bottom: 60px;
-      }
-      .main-image-container {
-        width: 100%;
-        margin-bottom: 60px;
-        text-align: center;
-      }
-      .main-image-container img {
-        width: 100%;
-        max-width: 800px;
-        height: auto;
-        display: block;
-        margin: 0 auto;
-        /* 必要に応じて微調整してください */
-        box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
-      }
+    }
+  </style>
 
-      @media (max-width: 768px) {
-        body { padding-top: 60px; }
-        .brand-title { font-size: 1.2rem; }
-        main { padding: 28px 16px; }
-      }
-    </style>
-  </head>
-  <body>
-    <Navigation />
+  <Breadcrumb items={[
+    { label: 'HOME', href: '/' },
+    { label: 'BRANDS', href: '#' },
+    { label: 'MANIFOLD' }
+  ]} />
 
-    <main>
+  <main>
+    <div class="hero-image">
+      <img src="/images/brands/manifold/img0001.jpg" alt="MANIFOLD" />
+    </div>
+    <div class="description">
       <div class="brand-content">
-        <h1 class="brand-title">MANIFOLD</h1>
-        
-        <div class="main-image-container">
-          <img src="/brands/manifold.jpg" alt="MANIFOLD ホースハイドバッグ" />
-        </div>
-
-        <div class="brand-description">
-<div class="brand-description">
-  <p>
-    私の偏見かもしれないが、比較的アメカジ好みのブランドかと思う。<br />
-    素材への拘り、技術、プロダクトの完成度は間違いなくトップレベルだ。
-  </p>
-
-  <p>
-    正直、好き嫌いの分かれるデザインもあると認識している。<br />
-    だが、アメカジでなくても刺さる人には、深く刺さる。
-  </p>
-
-  <p>
-    代表的なプロダクトはラウンドジップウォレットだと思っているのだが、<br />
-    この「ミニブリーフ」に関しては、唯一無二の傑作だ。
-  </p>
-
-  <p>
-    その理由は、いずれ「ELEMENTS」で紹介していこうと思う。<br />
-    間違いなくこの分野のトップレベルに君臨する、稀有なブランドである。
-  </p>
-</div>        </div>
+        <h2>MANIFOLD</h2>
+        <h3>圧倒的な強さ</h3>
+        <p>「構造と、その変化」を掲げるこのブランド。緻密に計算された設計と、選び抜かれた革。使い始めの硬さを、自分の手に馴染ませていく「調教」の時間は、このブランド特有の醍醐味です。</p>
+        <p>革製品の本質は、時間と共に変化していく素材の質感にあると考える。新品の頃の硬さと光沢、使い込むほどに柔らかくなり、個人的な使用痕が刻まれていく過程。MANIFOLDの製品は、この「変化」を設計の根幹に据えている。</p>
+        <p>特に印象的なのは、縫製の精度と構造的な強度だ。見た目のシンプルさとは裏腹に、内部には緻密に計算された支持構造が組み込まれている。一つ一つのステッチが機能的な意味を持ち、単なる装飾ではない。</p>
+        <p>使い始めの硬さは、長年の使用に耐えるための強度の証でもある。この硬さを自分の手で柔らかくしていく過程、つまり「調教」の時間こそが、このブランドを選ぶ者への最大の贈り物なのだ。時間が経つにつれて、製品は使う者の身体と習慣に合わせて変形していく。それは単なる劣化ではなく、個人的な物語が刻まれていく瞬間でもある。</p>
+        <p>選ばれる革の質も、このブランドの強みだ。丈夫さと美しさを両立させた素材は、長年の使用にも耐え、むしろ使い込むほどにその真価を発揮する。表面の経年変化は予測可能でありながら、個人的な使用による変化は唯一無二のものとなる。</p>
+        <p>MANIFOLDの製品を手に取るとき、人は単に物を買うのではない。未来の自分への投資であり、時間と共に育っていく相棒を選ぶのである。その圧倒的な強さは、見た目だけでなく、構造の深部に宿っている。</p>
       </div>
-    </main>
-  </body>
-</html>
+    </div>
+  </main>
+</Layout>

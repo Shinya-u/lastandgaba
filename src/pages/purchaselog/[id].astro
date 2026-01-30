@@ -1,0 +1,208 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('purchaselog');
+  return entries.map((entry) => ({
+    params: { id: entry.data.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+
+// Markdown本文をHTMLとしてレンダリングするためのコンポーネント
+const { Content } = await entry.render();
+---
+
+<Layout title={`${entry.data.title} | PURCHASE LOG`}>
+  <style>
+    main { padding: 40px 5vw; max-width: 800px; margin: 0 auto; }
+    .brand { font-size: 0.9rem; letter-spacing: 0.2em; color: #999; }
+    .title { font-family: var(--font-serif); font-size: 2rem; margin: 10px 0 32px; }
+
+    .images { display: grid; gap: 20px; margin: 0 0 32px; }
+    .image-wrap { width: 100%; aspect-ratio: 3 / 4; background: #eee; overflow: hidden; cursor: pointer; transition: opacity 0.3s; }
+    .image-wrap:hover { opacity: 0.8; }
+    .image-wrap img { width: 100%; height: 100%; object-fit: cover; }
+
+    .info-section { margin-bottom: 32px; padding-bottom: 32px; border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
+    .info-section:last-child { border-bottom: none; }
+
+    .price { font-family: var(--font-serif); font-size: 1.2rem; font-weight: bold; margin-bottom: 24px; }
+
+    .specs { font-family: var(--font-serif); }
+    .specs-title { font-size: 0.9rem; letter-spacing: 0.2em; color: var(--accent); margin-bottom: 16px; text-transform: uppercase; }
+    .specs-grid { display: grid; gap: 12px; }
+    .spec-item { display: flex; gap: 16px; font-size: 0.9rem; }
+    .spec-label { color: #666; min-width: 100px; }
+    .spec-value { color: #333; }
+
+    .body { font-family: var(--font-serif); line-height: 2; font-size: 0.95rem; color: #444; }
+    .body p { margin: 0 0 1.2em; }
+    .body a { color: inherit; text-decoration: underline; }
+    .body h2, .body h3 { font-family: var(--font-serif); margin: 2em 0 0.8em; }
+
+    /* Lightbox styles */
+    .lightbox { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.95); z-index: 5000; }
+    .lightbox.is-active { display: flex; align-items: center; justify-content: center; }
+    .lightbox-content { position: relative; max-width: 90vw; max-height: 90vh; }
+    .lightbox-image { max-width: 100%; max-height: 90vh; object-fit: contain; }
+    .lightbox-close { position: absolute; top: -40px; right: 0; color: #fff; font-size: 32px; cursor: pointer; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
+    .lightbox-nav { position: absolute; top: 50%; transform: translateY(-50%); color: #fff; font-size: 32px; cursor: pointer; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.1); border-radius: 50%; transition: background 0.3s; }
+    .lightbox-nav:hover { background: rgba(255, 255, 255, 0.2); }
+    .lightbox-nav.prev { left: -70px; }
+    .lightbox-nav.next { right: -70px; }
+    .lightbox-counter { position: absolute; bottom: -40px; left: 50%; transform: translateX(-50%); color: #fff; font-size: 0.9rem; }
+
+    @media (max-width: 768px) {
+      .lightbox-nav { width: 40px; height: 40px; font-size: 24px; }
+      .lightbox-nav.prev { left: 10px; }
+      .lightbox-nav.next { right: 10px; }
+    }
+  </style>
+  
+  <Breadcrumb items={[
+    { label: 'HOME', href: '/' },
+    { label: 'PURCHASE LOG', href: '/purchaselog' },
+    { label: entry.data.title }
+  ]} />
+  
+  <main>
+      <div class="brand">{entry.data.brand}</div>
+      <h1 class="title">{entry.data.title}</h1>
+
+      {entry.data.price && (
+        <div class="info-section">
+          <div class="price">{entry.data.price}</div>
+        </div>
+      )}
+
+      {entry.data.specs && (entry.data.specs.size || entry.data.specs.weight || entry.data.specs.material || entry.data.specs.color || entry.data.specs.dimensions) && (
+        <div class="info-section specs">
+          <div class="specs-title">仕様</div>
+          <div class="specs-grid">
+            {entry.data.specs.size && (
+              <div class="spec-item">
+                <span class="spec-label">サイズ</span>
+                <span class="spec-value">{entry.data.specs.size}</span>
+              </div>
+            )}
+            {entry.data.specs.weight && (
+              <div class="spec-item">
+                <span class="spec-label">重量</span>
+                <span class="spec-value">{entry.data.specs.weight}</span>
+              </div>
+            )}
+            {entry.data.specs.material && (
+              <div class="spec-item">
+                <span class="spec-label">素材</span>
+                <span class="spec-value">{entry.data.specs.material}</span>
+              </div>
+            )}
+            {entry.data.specs.color && (
+              <div class="spec-item">
+                <span class="spec-label">カラー</span>
+                <span class="spec-value">{entry.data.specs.color}</span>
+              </div>
+            )}
+            {entry.data.specs.dimensions && (
+              <div class="spec-item">
+                <span class="spec-label">サイズ（寸法）</span>
+                <span class="spec-value">{entry.data.specs.dimensions}</span>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      <div class="images" id="imageGallery">
+        {entry.data.images.map((src, i) => (
+          <div class="image-wrap" data-index={i}>
+            <img src={src} alt={`${entry.data.title} ${i + 1}`} loading="lazy" />
+          </div>
+        ))}
+      </div>
+
+      <div class="body">
+        <Content />
+      </div>
+  </main>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-close" id="lightboxClose">×</div>
+    <div class="lightbox-nav prev" id="lightboxPrev">‹</div>
+    <div class="lightbox-nav next" id="lightboxNext">›</div>
+    <div class="lightbox-content">
+      <img class="lightbox-image" id="lightboxImage" src="" alt="" />
+      <div class="lightbox-counter" id="lightboxCounter"></div>
+    </div>
+  </div>
+
+  <script>
+    const images = entry.data.images || [];
+    const imageGallery = document.getElementById('imageGallery');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxClose = document.getElementById('lightboxClose');
+    const lightboxPrev = document.getElementById('lightboxPrev');
+    const lightboxNext = document.getElementById('lightboxNext');
+    const lightboxCounter = document.getElementById('lightboxCounter');
+    
+    let currentIndex = 0;
+
+    function openLightbox(index) {
+      currentIndex = index;
+      updateLightbox();
+      lightbox.classList.add('is-active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('is-active');
+      document.body.style.overflow = '';
+    }
+
+    function updateLightbox() {
+      if (images.length === 0) return;
+      lightboxImage.src = images[currentIndex];
+      lightboxCounter.textContent = `${currentIndex + 1} / ${images.length}`;
+    }
+
+    function showNext() {
+      currentIndex = (currentIndex + 1) % images.length;
+      updateLightbox();
+    }
+
+    function showPrev() {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      updateLightbox();
+    }
+
+    // 画像クリックでLightboxを開く
+    imageGallery?.querySelectorAll('.image-wrap').forEach((wrap, index) => {
+      wrap.addEventListener('click', () => openLightbox(index));
+    });
+
+    // Lightboxコントロール
+    lightboxClose?.addEventListener('click', closeLightbox);
+    lightboxNext?.addEventListener('click', showNext);
+    lightboxPrev?.addEventListener('click', showPrev);
+
+    // 背景クリックで閉じる
+    lightbox?.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    // キーボード操作
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('is-active')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') showNext();
+      if (e.key === 'ArrowLeft') showPrev();
+    });
+  </script>
+</Layout>

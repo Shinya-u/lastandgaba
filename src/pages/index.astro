@@ -180,6 +180,11 @@ import Navigation from '../components/Navigation.astro';
       .brand-tree li:hover {
         color: #fff;
       }
+      .brand-tree li a {
+        color: inherit;
+        text-decoration: none;
+        display: block;
+      }
 
       /* --- メインコンテンツ --- */
       main {
@@ -319,48 +324,48 @@ import Navigation from '../components/Navigation.astro';
               <li data-key="comoli">COMOLI</li>
               <li data-key="ssstein">SSSTEIN</li>
               <li data-key="forme">FORME</li>
-              <li data-key="manifold">MANIFOLD</li>
+              <li><a href="/brands/manifold">MANIFOLD</a></li>
             </ul>
           </li>
+
         </ul>
       </div>
     </div>
 
     <main id="mainContent">
       <div class="hero-image">
-        <img id="mainImage" src="/hero.jpg" alt="" />
+        <img id="mainImage" src="/images/hero/hero.jpg" alt="" />
       </div>
       <div class="description" id="textArea">
-        形。素材。時間。選別された、生活の構成要素。<br />
-        型の描く線と、生地が空気に馴染む様。日々の断片を、静かに記録する。
+        Shape. Substance. Duration. The essential building blocks of life.The precision of the draft, the way the textile harmonizes with the space.The ideal: A fusion of intellect and anonymity.
       </div>
     </main>
 
     <script is:raw>
       const indexData = {
-        img: '/hero.jpg',
+        img: '/images/hero/hero.jpg',
         text:
-          '形。素材。時間。選別された、生活の構成要素。<br>型の描く線と、生地が空気に馴染む様。日々の断片を、静かに記録する。'
+          'Shape. Substance. Duration. The essential building blocks of life.The precision of the draft, the way the textile harmonizes with the space.The ideal: A fusion of intellect and anonymity.'
       };
 
       const data = {
         comoli: {
-          img: '/comoli.jpg',
+          img: '/images/brands/comoli/img0001.jpg',
           text:
             '<div class="brand-content"><h2>COMOLI</h2><h3>思想の根幹</h3><p>COMOLIの服を手に取るとき、最初に感じるのは「軽さ」と「違和感」かもしれません。日本の気候と日本人の体型に静かに寄り添う日常着。そのために計算された「余白」こそが、このブランドの真髄であると思うのです。</p></div>'
         },
         ssstein: {
-          img: '/ssstein.jpg',
+          img: '/images/brands/ssstein/img0001.jpg',
           text:
             '<div class="brand-content"><h2>SSSTEIN</h2><h3>静と動</h3><p>SSSTEINの服を鏡の前で合わせたとき、あのたっぷりとした袖の溜まりや、地面に吸い付くようなパンツの落ち感に驚きます。計算された重なりが「空気の層」を作り出し、静寂としての美しさを成立させています。</p></div>'
         },
         forme: {
-          img: '/forme.jpg',
+          img: '/images/brands/forme/img0001.jpg',
           text:
             '<div class="brand-content"><h2>FORME</h2><h3>歩行を設計する</h3><p>日本人の足特有のボリュームを考慮しながらも、極めてシャープで色気があるライン。木型の完成度が高く、自分の身体の一部を拡張してくれるような、精密なフィッティングを感じさせてくれます。</p></div>'
         },
         manifold: {
-          img: '/manifold.jpg',
+          img: '/images/brands/manifold/img0001.jpg',
           text:
             '<div class="brand-content"><h2>MANIFOLD</h2><h3>圧倒的な強さ</h3><p>「構造と、その変化」を掲げるこのブランド。緻密に計算された設計と、選び抜かれた革。使い始めの硬さを、自分の手に馴染ませていく「調教」の時間は、このブランド特有の醍醐味です。</p></div>'
         }
@@ -409,7 +414,7 @@ import Navigation from '../components/Navigation.astro';
           brandList.classList.toggle('is-open');
         });
 
-        document.querySelectorAll('#brandList li').forEach((li) => {
+        document.querySelectorAll('#brandList li[data-key]').forEach((li) => {
           li.addEventListener('click', () => {
             const key = li.getAttribute('data-key');
             showContent(key);

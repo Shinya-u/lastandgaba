@@ -1,0 +1,96 @@
+---
+interface Props {
+  items: Array<{
+    label: string;
+    href?: string;
+  }>;
+}
+
+const { items } = Astro.props;
+---
+
+<nav class="breadcrumb" aria-label="パンくずリスト">
+  <ol class="breadcrumb-list">
+    {items.map((item, index) => (
+      <li class="breadcrumb-item">
+        {item.href ? (
+          <a href={item.href} class="breadcrumb-link">
+            {item.label}
+          </a>
+        ) : (
+          <span class="breadcrumb-current">{item.label}</span>
+        )}
+        {index < items.length - 1 && (
+          <span class="breadcrumb-separator">/</span>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<style>
+  .breadcrumb {
+    padding: 0 5vw;
+    max-width: 1200px;
+    margin: 0 auto 20px;
+    padding-top: 20px;
+  }
+
+  .breadcrumb-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+  }
+
+  .breadcrumb-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .breadcrumb-link {
+    color: var(--accent);
+    text-decoration: none;
+    transition: opacity 0.3s;
+  }
+
+  .breadcrumb-link:hover {
+    opacity: 0.7;
+    text-decoration: underline;
+  }
+
+  .breadcrumb-current {
+    color: #333;
+    font-weight: normal;
+  }
+
+  .breadcrumb-separator {
+    color: var(--accent);
+    margin-left: 4px;
+  }
+
+  @media (max-width: 768px) {
+    .breadcrumb {
+      padding: 0 16px;
+      padding-top: 15px;
+      margin-bottom: 15px;
+    }
+
+    .breadcrumb-list {
+      font-size: 0.7rem;
+      gap: 6px;
+    }
+
+    .breadcrumb-item {
+      gap: 6px;
+    }
+  }
+</style>

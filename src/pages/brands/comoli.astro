@@ -1,0 +1,87 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+---
+<Layout title="COMOLI | LAST &amp; GABA">
+  <style>
+    main {
+      padding: 40px 5vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-image {
+      width: 100%;
+      max-width: 900px;
+      aspect-ratio: 3 / 2;
+      background: #eee;
+      margin-bottom: 40px;
+      overflow: hidden;
+    }
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .description {
+      width: 100%;
+      max-width: 900px;
+      font-family: var(--font-serif);
+      line-height: 2.2;
+      font-size: 0.95rem;
+      color: #444;
+      text-align: left;
+    }
+
+    .brand-content h2 {
+      font-size: 1.4rem;
+      font-weight: normal;
+      letter-spacing: 0.4em;
+      margin-bottom: 50px;
+      text-align: center;
+    }
+    .brand-content h3 {
+      font-size: 1rem;
+      margin-top: 45px;
+      margin-bottom: 15px;
+      border-left: 1px solid #333;
+      padding-left: 15px;
+    }
+    .brand-content p {
+      margin-bottom: 25px;
+      text-align: justify;
+    }
+
+    @media (max-width: 768px) {
+      main {
+        padding: 28px 16px;
+      }
+    }
+  </style>
+
+  <Breadcrumb items={[
+    { label: 'HOME', href: '/' },
+    { label: 'BRANDS', href: '#' },
+    { label: 'COMOLI' }
+  ]} />
+
+  <main>
+    <div class="hero-image">
+      <img src="/images/brands/comoli/img0001.jpg" alt="COMOLI" />
+    </div>
+    <div class="description">
+      <div class="brand-content">
+        <h2>COMOLI</h2>
+        <h3>思想の根幹</h3>
+        <p>COMOLIの服を手に取るとき、最初に感じるのは「軽さ」と「違和感」かもしれません。日本の気候と日本人の体型に静かに寄り添う日常着。そのために計算された「余白」こそが、このブランドの真髄であると思うのです。</p>
+        <p>服というものは、ただ身体を覆うだけの道具ではない。むしろ、身体と空間の間に生まれる「余白」こそが、その本質的な価値を決定づける。COMOLIの服を着ると、その余白が身体の動きを許容し、さらにその動きを引き出す。窮屈さはない。かといって、だらしないわけでもない。絶妙なバランスがそこにはある。</p>
+        <p>日本の気候は、高温多湿の夏から乾燥した冬まで、その変化が激しい。また、日本人の体型は、欧米のそれとは異なる独特のプロポーションを持つ。COMOLIは、この環境と身体に真摯に向き合い、それらに最適化された設計を追求している。</p>
+        <p>軽さという感覚は、素材の選定だけでは生まれない。パターンの設計、縫製の技術、すべてが統合されて初めて「軽さ」という感覚が生まれる。このブランドの服を着ると、身体への負担が軽減され、着心地そのものが思考をクリアにするような気がする。</p>
+        <p>違和感というのは、慣れ親しんだ服とは異なる感覚を指す。しかし、この違和感は不快なものではない。むしろ、新しい可能性を示唆するものだ。自分の身体と服の関係を、もう一度考え直すきっかけを与えてくれる。その違和感こそが、COMOLIを選ぶ理由なのかもしれない。</p>
+        <p>計算された余白は、単なるサイズの大きさではない。身体の動きを理解し、その動きを最大限に引き出すための空間設計だ。この余白によって、服は単なる被服ではなく、身体の拡張として機能する。それが、このブランドの思想の根幹にあるものだと感じる。</p>
+      </div>
+    </div>
+  </main>
+</Layout>

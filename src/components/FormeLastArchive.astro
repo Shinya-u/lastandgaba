@@ -1,0 +1,86 @@
+---
+const lastEntries = [
+  {
+    lastId: '№ 10',
+    catch: 'THE MODERN STANDARD',
+    representative: 'Front, Molder, 708',
+    designLogic:
+      '石膏像からのサンプリング。踵のホールド感を極限まで高めた現行のマスターピース。',
+  },
+  {
+    lastId: '№ 13',
+    catch: 'THE ROUGH-EDGED',
+    representative: 'Albert, Blucher (23SS~)',
+    designLogic:
+      '10番へのアンチテーゼ。ワイドパンツに負けないスクエアトウのボリューム感。',
+  },
+  {
+    lastId: '№ 12',
+    catch: 'THE SLIM DRESSY',
+    representative: 'Blucher & Balmoral',
+    designLogic:
+      '最も繊細なラインを描くドレッシーな木型。内羽根式との高い親和性。',
+  },
+  {
+    lastId: 'Loafer',
+    catch: 'THE WEIGHTLESS',
+    representative: 'Low Shoes, Loafer',
+    designLogic:
+      '春夏向けの軽快なバランス。踵抜けを物理的に防ぐタイトなフィッティング設計。',
+  },
+  {
+    lastId: '№ 97',
+    catch: 'THE HERITAGE',
+    representative: '708 (初期)',
+    designLogic:
+      'ブランドの原点。丸みが強くワークブーツ的な力強さを持つ。',
+  },
+];
+---
+
+<section
+  class="mx-auto max-w-5xl px-6 py-16 sm:px-10 sm:py-20"
+  style="font-family: var(--font-sans);"
+>
+  <header class="mb-14 sm:mb-20">
+    <p class="text-xs tracking-[0.35em] text-neutral-400">FORME ARCHIVE</p>
+    <h2 class="mt-4 text-2xl sm:text-3xl tracking-wide">
+      forme 木型（Last）アーカイブ
+    </h2>
+    <p class="mt-4 text-sm text-neutral-500">
+      ミニマルなエディトリアルの流儀で、各ラストの性格を整理。
+    </p>
+  </header>
+
+  <div class="space-y-16 sm:space-y-20">
+    {lastEntries.map((entry) => (
+      <article class="relative">
+        <div
+          class="absolute -left-1 top-0 text-6xl leading-none text-neutral-200/70 sm:text-8xl"
+          style="font-family: var(--font-serif);"
+        >
+          {entry.lastId}
+        </div>
+
+        <div class="relative pl-20 sm:pl-28">
+          <div class="text-xs uppercase tracking-[0.4em] text-neutral-400">
+            {entry.catch}
+          </div>
+          <div class="mt-4 text-[0.7rem] uppercase tracking-[0.3em] text-neutral-400">
+            Representative
+          </div>
+          <div class="mt-2 text-sm text-neutral-700">
+            {entry.representative}
+          </div>
+
+          <div class="mt-6 text-[0.7rem] uppercase tracking-[0.3em] text-neutral-400">
+            Design Logic
+          </div>
+          <div class="mt-2 text-sm leading-relaxed text-neutral-700">
+            {entry.designLogic}
+          </div>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>

@@ -1,53 +1,72 @@
 ---
-import Navigation from '../../components/Navigation.astro';
+import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
+import Breadcrumb from '../../components/Breadcrumb.astro';
 
 const entries = await getCollection('elements');
 
 // 表示順をID昇順にしたい場合（任意）
 entries.sort((a, b) => a.data.id.localeCompare(b.data.id));
+
+// カテゴリのリストを取得
+const categories = Array.from(new Set(entries.map(e => e.data.category))).sort();
+const entriesData = entries.map(entry => ({
+  id: entry.data.id,
+  brand: entry.data.brand,
+  title: entry.data.title,
+  category: entry.data.category,
+  thumbnail: entry.data.thumbnail,
+  href: `/elements/${entry.data.id}`
+}));
 ---
 
-<!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <title>ELEMENTS | LAST &amp; GABA</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <style>
-      :root {
-        --bg: #FAF9F6;
-        --text: #333333;
-        --accent: #999;
-        --font-serif: "YuMincho", "Yu Mincho", serif;
-        --font-sans: "Helvetica Neue", Arial, sans-serif;
-      }
-      body { background-color: var(--bg); color: var(--text); font-family: var(--font-sans); margin: 0; padding-top: 80px; }
-      main { padding: 60px 5vw; max-width: 1200px; margin: 0 auto; }
-      .page-title { font-family: var(--font-serif); font-size: 0.9rem; letter-spacing: 0.4em; color: var(--accent); margin-bottom: 60px; text-align: center; }
+<Layout title="ELEMENTS | LAST &amp; GABA">
+  <style>
+    main { padding: 60px 5vw; max-width: 1200px; margin: 0 auto; }
+    .page-title { font-family: var(--font-serif); font-size: 0.9rem; letter-spacing: 0.4em; color: var(--accent); margin-bottom: 40px; text-align: center; }
 
-      .elements-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 60px 40px; }
-      .element-card { text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: opacity 0.3s; }
-      .element-card:hover { opacity: 0.7; }
-      .image-wrapper { width: 100%; aspect-ratio: 3 / 4; background-color: #eee; overflow: hidden; margin-bottom: 15px; }
-      .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-      .element-info { font-family: var(--font-serif); }
-      .element-id { font-size: 0.65rem; color: var(--accent); letter-spacing: 0.1em; margin-bottom: 4px; text-transform: uppercase; }
-      .element-brand { font-size: 0.8rem; letter-spacing: 0.15em; font-weight: bold; margin-bottom: 2px; }
-      .element-name { font-size: 0.8rem; color: #666; }
-      @media (max-width: 768px) { .elements-grid { grid-template-columns: repeat(2, 1fr); gap: 40px 20px; } }
-    </style>
-  </head>
-  <body>
-    <Navigation />
-    <main>
+    .filter-section { margin-bottom: 40px; display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }
+    .filter-button { padding: 8px 20px; border: 1px solid #ddd; background: #fff; color: #333; font-family: var(--font-serif); font-size: 0.85rem; letter-spacing: 0.1em; cursor: pointer; transition: all 0.3s; }
+    .filter-button:hover { background: #f5f5f5; border-color: #999; }
+    .filter-button.is-active { background: #333; color: #fff; border-color: #333; }
+
+    .elements-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 60px 40px; }
+    .element-card { text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: opacity 0.3s; }
+    .element-card:hover { opacity: 0.7; }
+    .element-card.is-hidden { display: none; }
+    .image-wrapper { width: 100%; aspect-ratio: 3 / 4; background-color: #eee; overflow: hidden; margin-bottom: 15px; }
+    .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+    .element-info { font-family: var(--font-serif); }
+    .element-id { font-size: 0.65rem; color: var(--accent); letter-spacing: 0.1em; margin-bottom: 4px; text-transform: uppercase; }
+    .element-brand { font-size: 0.8rem; letter-spacing: 0.15em; font-weight: bold; margin-bottom: 2px; }
+    .element-name { font-size: 0.8rem; color: #666; }
+    @media (max-width: 768px) { 
+      .elements-grid { grid-template-columns: repeat(2, 1fr); gap: 40px 20px; }
+      .filter-section { gap: 8px; }
+      .filter-button { padding: 6px 16px; font-size: 0.8rem; }
+    }
+  </style>
+  
+  <Breadcrumb items={[
+    { label: 'HOME', href: '/' },
+    { label: 'ELEMENTS' }
+  ]} />
+  
+  <main>
       <h1 class="page-title">01 ELEMENTS</h1>
 
-      <div class="elements-grid">
+      <div class="filter-section">
+        <button class="filter-button is-active" data-category="all">すべて</button>
+        {categories.map((category) => (
+          <button class="filter-button" data-category={category}>{category}</button>
+        ))}
+      </div>
+
+      <div class="elements-grid" id="elementsGrid">
         {entries.map((entry) => (
-          <a href={`/elements/${entry.data.id}`} class="element-card">
+          <a href={`/elements/${entry.data.id}`} class="element-card" data-category={entry.data.category}>
             <div class="image-wrapper">
-              <img src={entry.data.thumbnail} alt={entry.data.title} loading="lazy" />
+              <img src={entry.data.images[0]} alt={entry.data.title} loading="lazy" />
             </div>
             <div class="element-info">
               <div class="element-id">{entry.data.id}</div>
@@ -57,6 +76,50 @@ entries.sort((a, b) => a.data.id.localeCompare(b.data.id));
           </a>
         ))}
       </div>
-    </main>
-  </body>
-</html>
+  </main>
+
+  <script define:vars={{ entriesData, categories }}>
+    const grid = document.getElementById('elementsGrid');
+    const filterButtons = document.querySelectorAll('.filter-button');
+    let activeCategory = 'all';
+
+    function filterElements(category) {
+      activeCategory = category;
+      
+      // ボタンの状態を更新
+      filterButtons.forEach(btn => {
+        if (btn.dataset.category === category) {
+          btn.classList.add('is-active');
+        } else {
+          btn.classList.remove('is-active');
+        }
+      });
+
+      // カードの表示/非表示を切り替え
+      const cards = grid?.querySelectorAll('.element-card');
+      cards?.forEach(card => {
+        const cardCategory = card.dataset.category;
+        if (category === 'all' || cardCategory === category) {
+          card.classList.remove('is-hidden');
+        } else {
+          card.classList.add('is-hidden');
+        }
+      });
+    }
+
+    // フィルタボタンのイベント
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const category = btn.dataset.category;
+        filterElements(category);
+      });
+    });
+
+    // URLパラメータからカテゴリを読み込む
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryParam = urlParams.get('category');
+    if (categoryParam && (categoryParam === 'all' || categories.includes(categoryParam))) {
+      filterElements(categoryParam);
+    }
+  </script>
+</Layout>

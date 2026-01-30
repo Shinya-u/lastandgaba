@@ -1,22 +1,362 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+---
+import '../styles/global.css';
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+interface Props {
+  title?: string;
+}
+
+const { title = 'LAST & GABA' } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{title}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      :root {
+        --bg: #FAF9F6;
+        --text: #333333;
+        --accent: #999;
+        --font-serif: "YuMincho", "Yu Mincho", serif;
+        --font-sans: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN",
+          "Hiragino Sans", sans-serif;
+      }
+
+      body {
+        background-color: var(--bg);
+        color: var(--text);
+        font-family: var(--font-sans);
+        margin: 0;
+        padding-top: 80px;
+        overflow-x: hidden;
+        font-size: 16px;
+      }
+
+      /* --- 固定ヘッダー（左に3本線＋ロゴ） --- */
+      header.top-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 80px;
+        background-color: var(--bg);
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 0 40px;
+        box-sizing: border-box;
+        z-index: 3000;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        gap: 24px;
+      }
+
+      .menu-trigger {
+        width: 28px;
+        height: 18px;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .menu-trigger span {
+        display: block;
+        width: 100%;
+        height: 2px;
+        background-color: #333;
+        transition: 0.3s;
+      }
+
+      .header-logo {
+        font-family: var(--font-serif);
+        font-size: 1.1rem;
+        letter-spacing: 0.4em;
+        cursor: pointer;
+        color: var(--text);
+        text-decoration: none;
+        white-space: nowrap;
+      }
+
+      /* --- 左から出るオーバーレイメニュー --- */
+      .menu-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.35);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+        z-index: 3200;
+      }
+      .menu-overlay.is-open {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .menu-panel {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 320px;
+        max-width: 80vw;
+        height: 100%;
+        background: #111;
+        color: #f5f5f5;
+        box-sizing: border-box;
+        padding: 32px 40px;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
+      .menu-overlay.is-open .menu-panel {
+        transform: translateX(0);
+      }
+
+      .menu-close {
+        font-size: 24px;
+        line-height: 1;
+        cursor: pointer;
+        margin-bottom: 40px;
+      }
+
+      .menu-title {
+        font-family: var(--font-serif);
+        font-size: 1.1rem;
+        letter-spacing: 0.4em;
+        margin-bottom: 40px;
+      }
+
+      .menu-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .menu-item {
+        margin-bottom: 16px;
+        cursor: pointer;
+      }
+
+      .menu-line {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 0.6em;
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .menu-panel a.menu-line,
+      .menu-panel a.menu-line:link,
+      .menu-panel a.menu-line:visited,
+      .menu-panel a.menu-line:hover,
+      .menu-panel a.menu-line:active {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .menu-number {
+        font-size: 0.7rem;
+        color: var(--accent);
+      }
+      .menu-label {
+        font-size: 0.9rem;
+        letter-spacing: 0.2em;
+      }
+
+      .brand-tree {
+        list-style: none;
+        padding: 6px 0 0 1.9em;
+        margin: 0;
+        display: none;
+      }
+      .brand-tree.is-open {
+        display: block;
+      }
+      .brand-tree li {
+        font-size: 0.85rem;
+        color: #ccc;
+        margin-bottom: 8px;
+        letter-spacing: 0.1em;
+        cursor: pointer;
+      }
+      .brand-tree li:hover {
+        color: #fff;
+      }
+      .brand-tree li a {
+        color: inherit;
+        text-decoration: none;
+        display: block;
+      }
+
+      /* ===== スマホ幅 ===== */
+      @media (max-width: 768px) {
+        header.top-bar {
+          padding: 0 20px;
+          height: 60px;
+          gap: 16px;
+        }
+        body {
+          padding-top: 60px;
+        }
+
+        .menu-panel {
+          width: 240px;
+          padding: 20px 16px;
+        }
+
+        .menu-title {
+          font-size: 1.1rem;
+          letter-spacing: 0.3em;
+          margin-bottom: 22px;
+        }
+
+        .menu-number {
+          font-size: 0.75rem;
+        }
+
+        .menu-label {
+          font-size: 1.0rem;
+          letter-spacing: 0.2em;
+        }
+
+        .brand-tree li {
+          font-size: 0.9rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="top-bar">
+      <div class="menu-trigger" id="menuBtn">
+        <span></span><span></span><span></span>
+      </div>
+      <a href="/" class="header-logo" id="logo">LAST &amp; GABA</a>
+    </header>
+
+    <div class="menu-overlay" id="menuOverlay">
+      <div class="menu-panel">
+        <div class="menu-close" id="menuClose">×</div>
+
+        <div class="menu-title">LAST &amp; GABA</div>
+
+        <ul class="menu-list">
+          <li class="menu-item">
+            <a class="menu-line" href="/elements">
+              <span class="menu-number">01</span>
+              <span class="menu-label">ELEMENTS</span>
+            </a>
+          </li>
+
+          <li class="menu-item">
+            <span class="menu-line">
+              <span class="menu-number">02</span>
+              <span class="menu-label">PROGRESS</span>
+            </span>
+          </li>
+
+          <li class="menu-item">
+            <a class="menu-line" href="/essay">
+              <span class="menu-number">03</span>
+              <span class="menu-label">ESSAY</span>
+            </a>
+          </li>
+
+          <li class="menu-item">
+            <span class="menu-line" id="brandsToggle">
+              <span class="menu-number">04</span>
+              <span class="menu-label">BRANDS</span>
+            </span>
+            <ul id="brandList" class="brand-tree">
+              <li><a href="/brands/comoli">COMOLI</a></li>
+              <li><a href="/brands/ssstein">SSSTEIN</a></li>
+              <li><a href="/brands/forme">FORME</a></li>
+              <li><a href="/brands/manifold">MANIFOLD</a></li>
+            </ul>
+          </li>
+
+          <li class="menu-item">
+            <a class="menu-line" href="/purchaselog">
+              <span class="menu-number">05</span>
+              <span class="menu-label">PURCHASE LOG</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <slot />
+
+    <script is:raw>
+      document.addEventListener('DOMContentLoaded', () => {
+        const menuBtn = document.getElementById('menuBtn');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const menuClose = document.getElementById('menuClose');
+        const brandsToggle = document.getElementById('brandsToggle');
+        const brandList = document.getElementById('brandList');
+
+        if (!menuBtn || !menuOverlay) return;
+
+        const openMenu = () => {
+          menuOverlay.classList.add('is-open');
+        };
+        const closeMenu = () => {
+          menuOverlay.classList.remove('is-open');
+        };
+
+        menuBtn.addEventListener('click', openMenu);
+        if (menuClose) {
+          menuClose.addEventListener('click', closeMenu);
+        }
+
+        menuOverlay.addEventListener('click', (e) => {
+          if (e.target === menuOverlay) closeMenu();
+        });
+
+        if (brandsToggle && brandList) {
+          brandsToggle.addEventListener('click', () => {
+            brandList.classList.toggle('is-open');
+          });
+        }
+
+        document.querySelectorAll('.menu-panel a[href]').forEach((a) => {
+          a.addEventListener('click', () => closeMenu());
+        });
+      });
+
+      // Astroの遷移後も動作するように設定
+      document.addEventListener('astro:after-swap', () => {
+        const menuBtn = document.getElementById('menuBtn');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const menuClose = document.getElementById('menuClose');
+        const brandsToggle = document.getElementById('brandsToggle');
+        const brandList = document.getElementById('brandList');
+
+        if (!menuBtn || !menuOverlay) return;
+
+        const openMenu = () => {
+          menuOverlay.classList.add('is-open');
+        };
+        const closeMenu = () => {
+          menuOverlay.classList.remove('is-open');
+        };
+
+        menuBtn.addEventListener('click', openMenu);
+        if (menuClose) {
+          menuClose.addEventListener('click', closeMenu);
+        }
+
+        menuOverlay.addEventListener('click', (e) => {
+          if (e.target === menuOverlay) closeMenu();
+        });
+
+        if (brandsToggle && brandList) {
+          brandsToggle.addEventListener('click', () => {
+            brandList.classList.toggle('is-open');
+          });
+        }
+
+        document.querySelectorAll('.menu-panel a[href]').forEach((a) => {
+          a.addEventListener('click', () => closeMenu());
+        });
+      });
+    </script>
+  </body>
+</html>

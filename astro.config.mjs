@@ -1,6 +1,6 @@
 import { defineConfig } from 'astro/config';
+import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
-  // base: '/lastandgaba',  ← 消す
-  // 他の設定そのまま
+  integrations: [tailwind()],
 });

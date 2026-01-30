@@ -1,0 +1,87 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+---
+<Layout title="SSSTEIN | LAST &amp; GABA">
+  <style>
+    main {
+      padding: 40px 5vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-image {
+      width: 100%;
+      max-width: 900px;
+      aspect-ratio: 3 / 2;
+      background: #eee;
+      margin-bottom: 40px;
+      overflow: hidden;
+    }
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .description {
+      width: 100%;
+      max-width: 900px;
+      font-family: var(--font-serif);
+      line-height: 2.2;
+      font-size: 0.95rem;
+      color: #444;
+      text-align: left;
+    }
+
+    .brand-content h2 {
+      font-size: 1.4rem;
+      font-weight: normal;
+      letter-spacing: 0.4em;
+      margin-bottom: 50px;
+      text-align: center;
+    }
+    .brand-content h3 {
+      font-size: 1rem;
+      margin-top: 45px;
+      margin-bottom: 15px;
+      border-left: 1px solid #333;
+      padding-left: 15px;
+    }
+    .brand-content p {
+      margin-bottom: 25px;
+      text-align: justify;
+    }
+
+    @media (max-width: 768px) {
+      main {
+        padding: 28px 16px;
+      }
+    }
+  </style>
+
+  <Breadcrumb items={[
+    { label: 'HOME', href: '/' },
+    { label: 'BRANDS', href: '#' },
+    { label: 'SSSTEIN' }
+  ]} />
+
+  <main>
+    <div class="hero-image">
+      <img src="/images/brands/ssstein/img0001.jpg" alt="SSSTEIN" />
+    </div>
+    <div class="description">
+      <div class="brand-content">
+        <h2>SSSTEIN</h2>
+        <h3>静と動</h3>
+        <p>SSSTEINの服を鏡の前で合わせたとき、あのたっぷりとした袖の溜まりや、地面に吸い付くようなパンツの落ち感に驚きます。計算された重なりが「空気の層」を作り出し、静寂としての美しさを成立させています。</p>
+        <p>服を着るという行為は、単に身体を覆うことではない。それは、空間を作り、その空間の中で身体を表現することでもある。SSSTEINの服は、この空間の創造において、独特の表現を持っている。袖の溜まり、パンツの落ち感、それらすべてが計算された「余白」であり、その余白が美しさを生み出す。</p>
+        <p>たっぷりとした袖の溜まりは、身体の動きを許容し、さらにその動きを美しく見せる。この溜まりは、単なるサイズの大きさではない。身体の動きを理解し、その動きを引き出すための空間設計だ。手を上げる、腕を振る、そのすべての動作が、この溜まりの中で美しく表現される。</p>
+        <p>地面に吸い付くようなパンツの落ち感は、重力を理解した設計の結果だ。パンツが地面に触れる瞬間、その質感が身体の動きと調和する。この落ち感は、単なる長さの問題ではない。身体のプロポーション、歩くときの動き、すべてが考慮された結果である。</p>
+        <p>計算された重なりは、服の層構造を作り出す。シャツ、ジャケット、コート、それぞれの層が独立しながらも、統合された美しさを生み出す。この重なりが「空気の層」を形成し、その層が身体と環境の間に介在する。この空気の層こそが、SSSTEINの服の独特の感覚を生み出す。</p>
+        <p>静寂としての美しさ。それは、派手さや主張ではなく、静かに存在することで際立つ美しさだ。SSSTEINの服は、着ることで静かな存在感を発揮する。その美しさは、瞬間的なものではなく、時間をかけてじっくりと味わうものだ。静と動が調和した、その瞬間にこそ、このブランドの真価がある。</p>
+      </div>
+    </div>
+  </main>
+</Layout>

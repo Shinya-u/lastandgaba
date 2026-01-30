@@ -1,0 +1,88 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+---
+<Layout title="FORME | LAST &amp; GABA">
+  <style>
+    main {
+      padding: 40px 5vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-image {
+      width: 100%;
+      max-width: 900px;
+      aspect-ratio: 3 / 2;
+      background: #eee;
+      margin-bottom: 40px;
+      overflow: hidden;
+    }
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .description {
+      width: 100%;
+      max-width: 900px;
+      font-family: var(--font-serif);
+      line-height: 2.2;
+      font-size: 0.95rem;
+      color: #444;
+      text-align: left;
+    }
+
+    .brand-content h2 {
+      font-size: 1.4rem;
+      font-weight: normal;
+      letter-spacing: 0.4em;
+      margin-bottom: 50px;
+      text-align: center;
+    }
+    .brand-content h3 {
+      font-size: 1rem;
+      margin-top: 45px;
+      margin-bottom: 15px;
+      border-left: 1px solid #333;
+      padding-left: 15px;
+    }
+    .brand-content p {
+      margin-bottom: 25px;
+      text-align: justify;
+    }
+
+    @media (max-width: 768px) {
+      main {
+        padding: 28px 16px;
+      }
+    }
+  </style>
+
+  <Breadcrumb items={[
+    { label: 'HOME', href: '/' },
+    { label: 'BRANDS', href: '#' },
+    { label: 'FORME' }
+  ]} />
+
+  <main>
+    <div class="hero-image">
+      <img src="/images/brands/forme/img0001.jpg" alt="FORME" />
+    </div>
+    <div class="description">
+      <div class="brand-content">
+        <h2>FORME</h2>
+        <h3>歩行を設計する</h3>
+        <p>日本人の足特有のボリュームを考慮しながらも、極めてシャープで色気があるライン。木型の完成度が高く、自分の身体の一部を拡張してくれるような、精密なフィッティングを感じさせてくれます。</p>
+        <p>靴というものは、単に足を保護する道具ではない。それは、身体の動きを支え、その動きを拡張する道具でもある。FORMEの靴は、この「動き」を設計の中心に据えている。歩く、走る、立ち上がる、そのすべての動作が、この靴によって洗練される。</p>
+        <p>日本人の足は、欧米人とは異なる独特のプロポーションを持つ。幅広で、甲高で、土踏まずの形状も異なる。FORMEは、この日本特有の足の形状を深く理解し、それに最適化された木型を開発している。この木型の完成度こそが、このブランドの強みだ。</p>
+        <p>極めてシャープで色気があるライン。それは、単なるデザインの問題ではない。足の形状を理解し、その形状を美しく見せるための設計だ。このラインは、身体の動きと調和し、その動きを美しく表現する。歩くとき、このラインが身体の動きに呼応し、独特の美しさを生み出す。</p>
+        <p>精密なフィッティングは、身体との密接な関係を作り出す。靴が足に馴染むとき、それは単なる被服ではなく、身体の一部として機能する。このフィッティングによって、歩くという行為そのものが洗練され、その洗練された動きが美しさを生み出す。</p>
+        <p>歩行を設計する。それは、単に靴を作ることではない。身体の動きを理解し、その動きを最大限に引き出す空間を作ることだ。FORMEの靴は、この空間を作り出す。そして、その空間の中で、身体は新しい動きを獲得する。それが、このブランドが追求する「歩行の設計」である。</p>
+        <p>自分の身体の一部を拡張してくれるような感覚。それは、靴が単なる道具ではなく、身体と一体化した存在であることを意味する。FORMEの靴を履くと、この感覚を強く感じる。そして、その感覚が、新しい歩き方、新しい身体の使い方を教えてくれる。それが、このブランドの真価なのだと思う。</p>
+      </div>
+    </div>
+  </main>
+</Layout>
